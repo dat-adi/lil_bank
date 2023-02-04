@@ -1,3 +1,6 @@
+"""
+Application configuration for the dashboard.
+"""
 from django.apps import AppConfig
 
 
