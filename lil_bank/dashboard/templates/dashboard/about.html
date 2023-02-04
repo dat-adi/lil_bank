@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block header %}
+<header class="py-5">
+    <div class="container px-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xxl-6">
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder mb-3">Last we checked, banking wasn't as easy as we thought.</h1>
+                    <p class="lead fw-normal text-muted mb-4">This time, we're here to change that.</p>
+                    <a class="btn btn-primary btn-lg" href="#scroll-target">Read our story</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock header %}
+{% block content %}
+<!-- About section one-->
+<section class="py-5 bg-light" id="scroll-target">
+    <div class="container px-5 my-5">
+        <div class="row gx-5 align-items-center">
+            <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://pbs.twimg.com/media/DFowjyZUAAAxLik?format=jpg&name=medium" alt="..." /></div>
+            <div class="col-lg-6">
+                <h2 class="fw-bolder">Our founding</h2>
+                <p class="lead fw-normal text-muted mb-0">The idea started with a dog, which had no ledgers, nor bank statements. Yet, somehow ended up being more profitable than half of the self-made entrepreneurs.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About section two-->
+<section class="py-5">
+    <div class="container px-5 my-5">
+        <div class="row gx-5 align-items-center">
+            <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://advancetitan.com/wp-content/uploads/2021/03/stonks.png" alt="..." /></div>
+            <div class="col-lg-6">
+                <h2 class="fw-bolder">Growth &amp; beyond</h2>
+                <p class="lead fw-normal text-muted mb-0">We later found out that the reason why the dog was statistically more profitable was because most self-made entrepreneurs were actually in debt.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Team members section-->
+<section class="py-5 bg-light">
+    <div class="container px-5 my-5">
+        <div class="text-center">
+            <h2 class="fw-bolder">Our team</h2>
+            <p class="lead fw-normal text-muted mb-5">Dedicated to quality and your success</p>
+        </div>
+        <div class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center">
+            <div class="col mb-5 mb-5 mb-xl-0">
+                <div class="text-center">
+                    <img class="img-fluid rounded-circle mb-4 px-4" src="https://datadi.murgi.org/author_huad5e8c0cf5375f009ad4e5f386e0c48d_36362_288x288_fill_q75_box_smart1.jpg" alt="..." />
+                    <h5 class="fw-bolder">Datta Adithya</h5>
+                    <div class="fst-italic text-muted">Founder &amp; CEO</div>
+                </div>
+            </div>
+            <div class="col mb-5 mb-5 mb-xl-0">
+                <div class="text-center">
+                    <img class="img-fluid rounded-circle mb-4 px-4" src="https://pbs.twimg.com/media/DFowjyZUAAAxLik?format=jpg&name=medium" alt="..." />
+                    <h5 class="fw-bolder">Doge</h5>
+                    <div class="fst-italic text-muted">CFO</div>
+                </div>
+            </div>
+            <div class="col mb-5 mb-5 mb-sm-0">
+                <div class="text-center">
+                    <img class="img-fluid rounded-circle mb-4 px-4" src="https://pbs.twimg.com/media/DFowjyZUAAAxLik?format=jpg&name=medium" alt="..." />
+                    <h5 class="fw-bolder">Doge</h5>
+                    <div class="fst-italic text-muted">Bone Manager</div>
+                </div>
+            </div>
+            <div class="col mb-5">
+                <div class="text-center">
+                    <img class="img-fluid rounded-circle mb-4 px-4" src="https://datadi.murgi.org/author_huad5e8c0cf5375f009ad4e5f386e0c48d_36362_288x288_fill_q75_box_smart1.jpg" alt="..." />
+                    <h5 class="fw-bolder">Datta Adithya</h5>
+                    <div class="fst-italic text-muted">CTO</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
