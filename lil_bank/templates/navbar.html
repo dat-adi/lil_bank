@@ -8,6 +8,12 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:about_page' %}">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Sign Up</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Log In</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:signup' %}">Sign Up</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
