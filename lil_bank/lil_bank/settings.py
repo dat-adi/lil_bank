@@ -22,20 +22,20 @@ SECRET_KEY = 'django-insecure-*4ms-xu=-vl^cox0^p97w8rg#hwz)bkno^!(0w6shtmwa%n#98
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts.apps.AccountsConfig',
+    'dashboard.apps.DashboardConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
-    'dashboard'
 ]
 
 MIDDLEWARE = [
@@ -74,8 +74,12 @@ WSGI_APPLICATION = 'lil_bank.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'lil_bank',
+        'USER': 'postgres',
+        'PASSWORD': 'unlockdb',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
