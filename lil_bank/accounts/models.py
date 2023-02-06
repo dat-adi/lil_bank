@@ -1,4 +1,4 @@
-# from django.db.models import Model, AutoField, CharField
+from django.db import models
 
 class Customer(models.Model):
     id: models.CharField = models.CharField(primary_key=True, max_length=32)
@@ -16,10 +16,3 @@ class Account(models.Model):
         on_delete=models.CASCADE,
     )
     balance: models.FloatField = models.FloatField(default=0.)
-# class Customer(Model):
-#     customerid: AutoField = AutoField(primary_key=True)
-#     accountno: CharField = CharField(max_length=256)
-#     firstname: CharField = CharField(max_length=32)
-#     lastname: CharField = CharField(max_length=32)
-#     address: CharField = CharField(max_length=512)
-#     phone: CharField = CharField(max_length=16)
