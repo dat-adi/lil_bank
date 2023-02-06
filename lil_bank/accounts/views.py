@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from .forms import LoginForm, SignUpForm
-
+from django.contrib.auth import login, logout
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -24,6 +24,20 @@ class LoginView(TemplateView):
     def get(self, request):
         form = LoginForm()
         return render(request, self.template_name, {'form': form})
+    
+    # Now check the input data.
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            # Check if the user exists.
+            if User.objects.filter(username=form.cleaned_data['username']).exists():
+                # Check if the password is correct.
+                user = User.objects.get(username=form.cleaned_data['username'])
+                if user.check_password(form.cleaned_data['password']):
+                    # Log in the user.
+                    login(request, user)
+                    return render(request, "accounts/login_success.html")
+            return render(request, "accounts/login_fail.html")
     
 
 
@@ -78,3 +92,10 @@ class LogoutView(TemplateView):
     This is the view for logging out.
     """
     template_name = "accounts/logout.html"
+    # This is the view for logging out. It logs out the user and redirects to the login page.
+    def get(self, request):
+        # Log out the user.
+        logout(request)
+        # Redirect to the login page.
+        return render(request, 'accounts/login.html', {'form': LoginForm()})
+    
