@@ -144,7 +144,14 @@ class AccountDetailsView(TemplateView):
     """
     This is the view for displaying the account details.
     """
-    pass
+    template_name = "accounts/user_profile.html"
+    def get(self, request):
+        """
+        Get request to display the user's profile.
+        """
+        customer = Customer.objects.get(id=request.user.id)    
+        user = User.objects.get(id=request.user.id)    
+        return render(request, self.template_name, {'customer': customer, 'user': user})
 
 
 class AccountCreateView(TemplateView):
