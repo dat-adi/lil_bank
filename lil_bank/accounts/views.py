@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from .forms import LoginForm
+from .forms import LoginForm, SignUpForm
 
 # from django import forms
 # from django.contrib.auth.forms import UserCreationForm
@@ -32,7 +32,10 @@ class SignUpView(TemplateView):
     This is the view for signing in.
     """
     template_name = "accounts/signup.html"
-
+    # This is the view for signing in.
+    def get(self, request):
+        form = SignUpForm()
+        return render(request, self.template_name, {'form': form})
 
 class LogoutView(TemplateView):
     """
