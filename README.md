@@ -35,25 +35,24 @@ user details should be displayed in the tabular structure.
 Bank needs to display a summarized report about customers. 
 
 ## Features
-- [ ] Web Portal should have multiple menu items to perform tasks after login
-- [ ] Some menu option should have sub menu 
+- [X] Web Portal should have multiple menu items to perform tasks after login
+- [X] Some menu option should have sub menu 
 - [ ] Web portal should be with JavaScript based slider 
-- [ ] Web portal should have registration and login form
+- [X] Web portal should have registration and login form
 - [ ] Web portal should have search module 
-- [ ] Only authorized user should access the portal’s features.
-- [ ] The elements required for storing details about customers are:
-- [ ] Validate the Web form to get the required data 
-- [ ] Write methods for declaring fields to be used for storing structured data 
+- [X] Only authorized user should access the portal’s features.
+- [X] Validate the Web form to get the required data 
+- [X] Write methods for declaring fields to be used for storing structured data 
 - [ ] Validate the structure of data.  
 - [ ] Display summarized data. 
 - [ ] Can have caching management for improved performance 
 - [ ] State Management using sessions
-- [ ] User profiles 
+- [X] User profiles 
 - [ ] Web portal should be compatible with all browsers 
 
 ## Other Challenges/Features
 
-- [ ] Use bootstrap for design pages
+- [X] Use bootstrap for design pages
 - [ ] Provide authentication, authorization using oauth or similar package
 - [ ] Create restful apis for app features
 - [ ] Provide swagger UI for rest api usage
