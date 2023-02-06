@@ -1,8 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-# from django.contrib.auth.models import User
-# from django.forms import ModelForm
-# from .models import Customer
+from django.contrib.auth.models import User
+from django.forms import ModelForm
+from .models import Customer , Account
 
 # class AccountForm(ModelForm):
 #     """
@@ -16,11 +16,17 @@ class SignUpForm(forms.Form):
     """
     This is the form for signing up.
     """
-    username = forms.CharField(max_length=100)
+    first_name = forms.CharField(max_length=32)
+    last_name = forms.CharField(max_length=32)
+    username = forms.CharField(max_length=50)
     email = forms.EmailField(max_length=254)
+    address = forms.CharField(max_length=256)
+    phone = forms.CharField(max_length=16)
+    # type = forms.RadioSelect('Account Type', choices=[('Checking', 'Checking'), ('Savings', 'Savings')], initial='Checking')
     password1 = forms.CharField(label="Password", strip=False, widget=forms.PasswordInput)
     # password2 should match password1
-    password2 = forms.CharField(label="Password confirmation", strip=False, widget=forms.PasswordInput, help_text="Enter the same password as before, for verification.")
+    password2 = forms.CharField(label="Re-enter Password", strip=False, widget=forms.PasswordInput)
+
 
 class LoginForm(forms.Form):
     """
