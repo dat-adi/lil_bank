@@ -15,4 +15,4 @@ class Account(models.Model):
         Customer,
         on_delete=models.CASCADE,
     )
-    balance: models.FloatField = models.FloatField()
+    balance: models.FloatField = models.FloatField(default=0.)
