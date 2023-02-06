@@ -1,6 +1,6 @@
 <body>
     <h1>Log in</h1>
-    <form method="post">
+    <form action="{% url 'accounts:login' %}" method="post">
         {% csrf_token %}
         <table>
             {{ form.as_table }}
