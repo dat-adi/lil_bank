@@ -40,7 +40,7 @@ class DepositForm(forms.Form):
     """
     This is the form used to deposit cash into an account.
     """
-    add_money = forms.IntegerField()
+    add_money = forms.IntegerField(max_value=100000)
 
 
 class WithdrawForm(forms.Form):

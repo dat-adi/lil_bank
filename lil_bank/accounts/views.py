@@ -176,6 +176,9 @@ class WithdrawView(TemplateView):
             rm_money = form.cleaned_data['rm_money']
             customer = Customer.objects.get(id=request.user.id)
             account = Account.objects.get(owner_id=customer.id)
+            if rm_money > account.balance:
+                return redirect('accounts:invalid_operation')
+
             account.balance -= rm_money
             account.save()
 
@@ -214,3 +217,7 @@ class AccountDeleteView(TemplateView):
     future.
     """
     pass
+
+
+class InvalidOperation(TemplateView):
+    template_name = "transactions/invalid_operation.html"
