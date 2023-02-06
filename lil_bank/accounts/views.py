@@ -103,3 +103,17 @@ class LogoutView(TemplateView):
         # Redirect to the login page.
         return render(request, 'accounts/login.html', {'form': LoginForm()})
     
+# The following UserProfile class with post fucntion is used to display the user's profile.
+
+class UserProfile(TemplateView):
+    """
+    This is the view for displaying the user's profile.
+    """
+    template_name = "accounts/user_profile.html"
+    # This is the view for displaying the user's profile.
+    def get(self, request):
+        customer = Customer.objects.get(id=request.user.id)    
+        user = User.objects.get(id=request.user.id)    
+        return render(request, self.template_name, {'customer': customer, 'user': user})
+
+    
