@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <body>
     <h1>Log in</h1>
     <form action="{% url 'accounts:login' %}" method="post">
@@ -10,3 +12,4 @@
     <p>Don't have an account? <a href="{% url 'accounts:signup' %}">Sign up</a></p>
     <p>Click <a href="{% url 'dashboard:landing_page' %}">here</a> to go back to homepage.</p>
 </body>
+{% endblock content %}
