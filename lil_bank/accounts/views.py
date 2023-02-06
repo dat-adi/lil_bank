@@ -2,26 +2,16 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .forms import LoginForm, SignUpForm
 from django.contrib.auth import login, logout
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.forms import ModelForm
 from .models import Account, Customer
-# from dashboard import views as dashboard_views
 
-# class LoginForm(forms.Form):
-#     """
-#     This is the form for logging in.
-#     """
-#     username = forms.CharField(max_length=100)
-#     password = forms.CharField(widget=forms.PasswordInput)
 
 class LoginView(TemplateView):
     """
     This is the view for logging in.
     """
     template_name = "accounts/login.html"
-    # This is the view for logging in.
+
     def get(self, request):
         form = LoginForm()
         return render(request, self.template_name, {'form': form})
@@ -42,7 +32,6 @@ class LoginView(TemplateView):
                     return redirect('dashboard:landing_page')
                     # return render(request, "accounts/login_success.html")
             return render(request, "accounts/login_fail.html")
-    
 
 
 class SignUpView(TemplateView):
@@ -50,7 +39,7 @@ class SignUpView(TemplateView):
     This is the view for signing in.
     """
     template_name = "accounts/signup.html"
-    # This is the view for signing in.
+
     def get(self, request):
         form = SignUpForm()
         return render(request, self.template_name, {'form': form})
@@ -65,6 +54,7 @@ class SignUpView(TemplateView):
                 password=form.cleaned_data['password1'],
                 email=form.cleaned_data['email'],
             )
+
             # Create a new customer.
             customer = Customer.objects.create(
                 id=user.id,
@@ -73,6 +63,7 @@ class SignUpView(TemplateView):
                 address=form.cleaned_data['address'],
                 phone=form.cleaned_data['phone'],
             )
+
             # Create a new account.
             account = Account.objects.create(
                 no=customer.id,
@@ -88,7 +79,6 @@ class SignUpView(TemplateView):
             account.save()
             return render(request, 'accounts/login.html', {'form': LoginForm()})
         return render(request, self.template_name, {'form': form})
-    
 
 
 class LogoutView(TemplateView):
@@ -96,24 +86,89 @@ class LogoutView(TemplateView):
     This is the view for logging out.
     """
     template_name = "logout.html"
+
     # This is the view for logging out. It logs out the user and redirects to the login page.
     def get(self, request):
         # Log out the user.
         logout(request)
         # Redirect to the login page.
         return render(request, 'accounts/login.html', {'form': LoginForm()})
-    
-# The following UserProfile class with post fucntion is used to display the user's profile.
+
 
 class UserProfile(TemplateView):
     """
     This is the view for displaying the user's profile.
     """
     template_name = "accounts/user_profile.html"
+
     # This is the view for displaying the user's profile.
     def get(self, request):
+        """
+        Get request to display the user's profile.
+        """
         customer = Customer.objects.get(id=request.user.id)    
         user = User.objects.get(id=request.user.id)    
         return render(request, self.template_name, {'customer': customer, 'user': user})
 
     
+class TransactionView(TemplateView):
+    """
+    This is the view for displaying transactions.
+    """
+    pass
+
+
+class BalanceView(TemplateView):
+    """
+    This is the view for displaying the balance of the account.
+    """
+    pass
+
+
+class DepositView(TemplateView):
+    """
+    This is the view for depositing money.
+    """
+    pass
+
+
+class WithdrawView(TemplateView):
+    """
+    This is the view for withdrawing money from the
+    account.
+    """
+    pass
+
+
+class AccountDetailsView(TemplateView):
+    """
+    This is the view for displaying the account details.
+    """
+    pass
+
+
+class AccountCreateView(TemplateView):
+    """
+    TODO
+    This is a feature that will be worked on in the far
+    future.
+    """
+    pass
+
+
+class AccountModifyView(TemplateView):
+    """
+    TODO
+    This is a feature that will be worked on in the far
+    future.
+    """
+    pass
+
+
+class AccountDeleteView(TemplateView):
+    """
+    TODO
+    This is a feature that will be worked on in the far
+    future.
+    """
+    pass
