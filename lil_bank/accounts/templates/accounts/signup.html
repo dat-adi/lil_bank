@@ -13,7 +13,13 @@
                 <div class="col-lg-8 col-xl-6">
                     <form id="contactForm" method="POST">
                         {% csrf_token %}
-                        {{ form.as_p }}
+                            <center>
+                        <!-- {{ form.as_p }} -->
+                        <table>
+                            {{ form.as_table }}
+                        </table>
+                        <br>
+                            </center>
                         <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Submit</button></div>
                     </form>
                     <p class="text-muted mb-0">Already have an account? Log in <a href="{% url 'accounts:login' %}">here</a>.</p>

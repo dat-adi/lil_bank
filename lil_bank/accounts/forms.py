@@ -1,0 +1,37 @@
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.forms import ModelForm
+from .models import Customer , Account
+
+# class AccountForm(ModelForm):
+#     """
+#     This is the form for creating and editing accounts.
+#     """
+#     class Meta:
+#         model = Customer
+#         fields = ['account_name', 'account_type', 'account_balance', 'account_owner']
+
+class SignUpForm(forms.Form):
+    """
+    This is the form for signing up.
+    """
+    first_name = forms.CharField(max_length=32)
+    last_name = forms.CharField(max_length=32)
+    username = forms.CharField(max_length=50)
+    email = forms.EmailField(max_length=254)
+    address = forms.CharField(max_length=256)
+    phone = forms.CharField(max_length=16)
+    # type = forms.RadioSelect('Account Type', choices=[('Checking', 'Checking'), ('Savings', 'Savings')], initial='Checking')
+    password1 = forms.CharField(label="Password", strip=False, widget=forms.PasswordInput)
+    # password2 should match password1
+    password2 = forms.CharField(label="Re-enter Password", strip=False, widget=forms.PasswordInput)
+
+
+class LoginForm(forms.Form):
+    """
+    This is the form for logging in.
+    """
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput)
+

@@ -77,7 +77,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'lil_bank',
         'USER': 'postgres',
-        'PASSWORD': 'unlockdb',
+        'PASSWORD': 'Finserv@2023',
         'HOST': 'localhost',
         'PORT': '5432',
     }
