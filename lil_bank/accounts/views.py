@@ -73,10 +73,7 @@ class SignUpView(TemplateView):
             # Create a new account.
             account = Account.objects.create(
                 no=customer.id,
-                name=form.cleaned_data['first_name'] + ' ' + form.cleaned_data['last_name'],
-                type='Checking',
                 owner=customer,
-                balance=0.,
             )
             # Redirect to the login page.
             # Write to the database.
@@ -101,22 +98,6 @@ class LogoutView(TemplateView):
         return render(request, 'accounts/login.html', {'form': LoginForm()})
 
 
-class UserProfile(TemplateView):
-    """
-    This is the view for displaying the user's profile.
-    """
-    template_name = "accounts/user_profile.html"
-
-    def get(self, request):
-        """
-        Get request to display the user's profile.
-        """
-        customer = Customer.objects.get(id=request.user.id)    
-        user = User.objects.get(id=request.user.id)    
-        return render(request, self.template_name, {
-            'customer': customer,
-            'user': user
-        })
 
     
 class TransactionView(TemplateView):
@@ -224,8 +205,19 @@ class AccountDetailsView(TemplateView):
         Get request to display the user's profile.
         """
         customer = Customer.objects.get(id=request.user.id)    
-        user = User.objects.get(id=request.user.id)   
-        return render(request, self.template_name, {'customer': customer, 'user': user})
+        user = User.objects.get(id=request.user.id)
+        listBalance = []
+        listType = []
+        listOwnerID = []
+        listNo = []
+        for i in Account.objects.filter(owner_id=request.user.id):
+            listBalance.append(i.balance)
+            listType.append(i.type)
+            listOwnerID.append(i.owner_id)
+            listNo.append(i.no)
+        listNew = [listNo, listBalance, listType, listOwnerID]
+        listRes = list(map(list, zip(*listNew)))
+        return render(request, self.template_name, {'customer': customer, 'user': user, 'listRes': listRes})
 
 
 class AccountCreateView(TemplateView):
@@ -238,6 +230,18 @@ class AccountCreateView(TemplateView):
     def get(self, request):
         form = CreateAccountForm()
         return render(request, self.template_name, {'form': form})
+    
+    def post(self, request):
+        form = CreateAccountForm(request.POST)
+        if form.is_valid():
+            account_type = form.cleaned_data['type']
+            customer = Customer.objects.get(id=request.user.id)
+            account = Account(
+                owner=customer,
+                type=account_type
+            )
+            account.save()
+            return redirect('accounts:view_account')
 
 
 class AccountModifyView(TemplateView):

@@ -30,8 +30,12 @@
     }
 </style>
 <body>
-    <h1> {{customer.first_name}}'s Data</h1>
-    <table>
+    <br>
+    <h1> {{customer.first_name}}'s Page</h1>
+    <table style="float: left;">
+        <tr>
+            <td colspan="2">Your Details</td>
+        </tr>
         <tr>
             <td>Username</td>
             <td style="color: azure;">{{ user.username }}</td>
@@ -57,9 +61,30 @@
             <td style="color: azure;">{{ customer.address }}</td>
         </tr>
     </table>
+    <!-- Display accounts_account table from database. -->
+
+    <table style="float: left; padding-right: 10px;">
+        <tr>
+            <td colspan="4">Your Accounts</td>
+        </tr>
+        <tr>
+            <td>Account Number</td>
+            <td>Balance</td>
+            <td>Account Type</td>
+            <td>Owner ID</td>
+        </tr>
+            {% for i in listRes%}
+                <tr>
+                    <td style="color: azure;">{{i.0}}</td>
+                    <td style="color: azure;">{{i.1}}</td>
+                    <td style="color: azure;">{{i.2}}</td>
+                    <td style="color: azure;">{{i.3}}</td>
+                </tr>
+            {% endfor %}
+        
+    </table>
     <br>
-    <hr>
-    <p>Click <a href="{% url 'dashboard:landing_page' %}">here</a> to go back to homepage.</p>
-    
+    <a href="{% url 'dashboard:landing_page' %}" style="float:inherit; font-family: Arial; font-size: 0.5cm; background-color: burlywood; border: 2px solid black;">To Homepage </a>
+
 </body>
 {% endblock content %}
