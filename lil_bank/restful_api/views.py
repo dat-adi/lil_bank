@@ -28,7 +28,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 class CustomerViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows customers to be viewed.
+    API endpoint that allows customers to be viewed or edited.
     """
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
@@ -37,7 +37,7 @@ class CustomerViewSet(viewsets.ModelViewSet):
 
 class AccountViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows customers to be viewed.
+    API endpoint that allows customers to be viewed or edited.
     """
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
@@ -46,7 +46,7 @@ class AccountViewSet(viewsets.ModelViewSet):
 
 class TransactionViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows customers to be viewed.
+    API endpoint that allows customers to be viewed or edited.
     """
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
