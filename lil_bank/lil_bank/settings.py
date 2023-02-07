@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'dashboard.apps.DashboardConfig',
     'restful_api.apps.RestfulApiConfig',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
