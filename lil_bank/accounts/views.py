@@ -36,10 +36,8 @@ class LoginView(TemplateView):
                 if user.check_password(form.cleaned_data['password']):
                     # Log in the user.
                     login(request, user)
-                    # return render(request, "accounts/login_success.html")
                     # Now redirect to the home page.
                     return redirect('dashboard:landing_page')
-                    # return render(request, "accounts/login_success.html")
             return render(request, "accounts/login_fail.html")
 
 
@@ -78,11 +76,12 @@ class SignUpView(TemplateView):
                 no=customer.id,
                 owner=customer,
             )
-            # Redirect to the login page.
             # Write to the database.
             user.save()
             customer.save()
             account.save()
+
+            # Redirect to the login page.
             return render(request, 'accounts/login.html', {'form': LoginForm()})
         return render(request, self.template_name, {'form': form})
 
@@ -101,36 +100,20 @@ class LogoutView(TemplateView):
         return render(request, 'accounts/login.html', {'form': LoginForm()})
 
 
-class TransactionListView(LoginRequiredMixin, ListView):
-    """
-    This is the list view for transactions.
-    """
-    login_url = '/accounts/login/'
-    redirect_field_name = 'redirect_to'
-    context_object_name = "transactions"
-    template_name = "transactions/transaction_list_view.html"
-
-    Model = Transaction
-
-    def get_queryset(self):
-        customer = Customer.objects.get(id=self.request.user.id)
-        account = Account.objects.get(owner=customer)
-        queryset = Transaction.objects.filter(account=account)
-
-        return queryset
-
-
-class TransactionDetailView(LoginRequiredMixin, TemplateView):
+class TransactionView(LoginRequiredMixin, TemplateView):
     """
     This is the view for displaying transactions.
     """
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
-    template_name = "transactions/transaction_detail.html"
+    template_name = "transactions/transactions.html"
 
     def get(self, request, **kwargs):
-        account = Account.objects.get(no=kwargs['pk'])
-        transactions = Transaction.objects.filter(account=account)
+        try:
+            account = Account.objects.get(no=kwargs['pk'])
+            transactions = Transaction.objects.filter(account=account)
+        except ObjectDoesNotExist as err:
+            return redirect('accounts:invalid_operation')
 
         return render(request, self.template_name, {
             'transactions': transactions,
@@ -158,7 +141,8 @@ class DepositView(LoginRequiredMixin, TemplateView):
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
     template_name = "transactions/deposit.html"
-    def get(self, request):
+
+    def get(self, request, **kwargs):
         form = DepositForm()
         customer = Customer.objects.get(id=request.user.id)
         account = Account.objects.get(owner_id=customer.id)
@@ -191,7 +175,8 @@ class WithdrawView(LoginRequiredMixin, TemplateView):
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
     template_name = "transactions/withdraw.html"
-    def get(self, request):
+
+    def get(self, request, **kwargs):
         form = WithdrawForm()
         customer = Customer.objects.get(id=request.user.id)
         account = Account.objects.get(owner_id=customer.id)
@@ -331,3 +316,20 @@ class InvalidOperation(TemplateView):
     performs an invalid operation.
     """
     template_name = "transactions/invalid_operation.html"
+
+
+class AccountView(LoginRequiredMixin, TemplateView):
+    """
+    This page lists the accounts present for the customer,
+    and redirects them to pages with operations for that
+    account.
+    """
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+    template_name = "accounts/account.html"
+
+    def get(self, request, **kwargs):
+        accounts = Account.objects.filter(owner=self.request.user.id)
+        return render(request, self.template_name, {
+            'accounts': accounts
+        })

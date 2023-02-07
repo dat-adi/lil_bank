@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-{% for account in accounts %}
-<p><a href="{% url 'accounts:account_detail' pk=account.id %}"> Account {{ account.id }}</a></p>
-{% endfor %}
+<div class="container px-5 my-5">
+    <div class="text-center mb-5">
+        <h3>Here's a list of accounts associated to this user,</h3>
+        <ol>
+            {% for account in accounts %}
+            <li>
+                <a href="{% url 'accounts:account_detail' pk=account.no %}"> Account {{ account.no }}</a>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
 {% endblock content %}

@@ -75,7 +75,7 @@
         </tr>
             {% for i in listRes%}
                 <tr>
-                    <td style="color: azure;"><a href="{% url 'accounts:transaction_detail' pk=i.0 %}">{{i.0}}</a></td>
+                    <td style="color: azure;"><a href="{% url 'accounts:transactions' pk=i.0 %}">{{i.0}}</a></td>
                     <td style="color: azure;">{{i.1}}</td>
                     <td style="color: azure;">{{i.2}}</td>
                     <td style="color: azure;">{{i.3}}</td>
