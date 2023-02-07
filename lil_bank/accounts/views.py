@@ -24,19 +24,23 @@ class LoginView(TemplateView):
     # Now check the input data.
     def post(self, request):
         form = LoginForm(request.POST)
-        if form.is_valid():
-            # Check if the user exists.
-            if User.objects.filter(username=form.cleaned_data['username']).exists():
-                # Check if the password is correct.
-                user = User.objects.get(username=form.cleaned_data['username'])
-                if user.check_password(form.cleaned_data['password']):
-                    # Log in the user.
-                    login(request, user)
-                    # return render(request, "accounts/login_success.html")
-                    # Now redirect to the home page.
-                    return redirect('dashboard:landing_page')
-                    # return render(request, "accounts/login_success.html")
+        if not form.is_valid():
             return render(request, "accounts/login_fail.html")
+
+        # Check if the user exists.
+        if not User.objects.filter(username=form.cleaned_data['username']).exists():
+            return render(request, "accounts/login_fail.html")
+
+        # Check if the password is correct.
+        user = User.objects.get(username=form.cleaned_data['username'])
+        if not user.check_password(form.cleaned_data['password']):
+            return render(request, "accounts/login_fail.html")
+
+        # Log in the user.
+        login(request, user)
+
+        # Now redirect to the home page.
+        return redirect('dashboard:landing_page')
 
 
 class SignUpView(TemplateView):
