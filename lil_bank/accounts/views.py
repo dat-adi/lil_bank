@@ -8,7 +8,7 @@ from .forms import (
 )
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
-from .models import Account, Customer
+from .models import Account, Customer, Transaction
 
 
 class LoginView(TemplateView):
@@ -112,14 +112,29 @@ class UserProfile(TemplateView):
         """
         customer = Customer.objects.get(id=request.user.id)    
         user = User.objects.get(id=request.user.id)    
-        return render(request, self.template_name, {'customer': customer, 'user': user})
+        return render(request, self.template_name, {
+            'customer': customer,
+            'user': user
+        })
 
     
 class TransactionView(TemplateView):
     """
     This is the view for displaying transactions.
     """
-    pass
+    template_name = "transactions/transaction_list.html"
+    def get(self, request):
+        # TODO: Filter transactions by account number.
+
+        # HACK: For now, fetch the first account and use that.
+        account = Account.objects.first()
+
+        transactions = Transaction.objects.filter(account=account)
+
+        return render(request, self.template_name, {
+            'transactions': transactions,
+            'account': account,
+        })
 
 
 class BalanceView(TemplateView):
@@ -151,8 +166,14 @@ class DepositView(TemplateView):
             add_money = form.cleaned_data['add_money']
             customer = Customer.objects.get(id=request.user.id)
             account = Account.objects.get(owner_id=customer.id)
+            transaction = Transaction(
+                account=account,
+                withdrawal=False,
+                amount=add_money
+            )
             account.balance += add_money
             account.save()
+            transaction.save()
 
             return redirect('accounts:balance')
 
@@ -176,11 +197,18 @@ class WithdrawView(TemplateView):
             rm_money = form.cleaned_data['rm_money']
             customer = Customer.objects.get(id=request.user.id)
             account = Account.objects.get(owner_id=customer.id)
+
             if rm_money > account.balance:
                 return redirect('accounts:invalid_operation')
 
+            transaction = Transaction(
+                account=account,
+                withdrawal=True,
+                amount=rm_money
+            )
             account.balance -= rm_money
             account.save()
+            transaction.save()
 
             return redirect('accounts:balance')
 
