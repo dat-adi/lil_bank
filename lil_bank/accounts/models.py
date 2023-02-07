@@ -11,10 +11,18 @@ class Customer(models.Model):
 
 class Account(models.Model):
     no: models.AutoField = models.AutoField(primary_key=True)
-    # name: models.CharField = models.CharField(max_length=32)
-    type: models.CharField = models.CharField(max_length=32)
+    type: models.CharField = models.CharField(max_length=32, default="checking")
     owner: models.ForeignKey = models.ForeignKey(
         Customer,
         on_delete=models.CASCADE,
     )
     balance: models.FloatField = models.FloatField(default=0.)
+
+
+class Transaction(models.Model):
+    account: models.ForeignKey = models.ForeignKey(
+        Account,
+        on_delete=models.CASCADE,
+    )
+    withdrawal: models.BooleanField = models.BooleanField()
+    amount: models.FloatField = models.FloatField()
