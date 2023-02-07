@@ -277,22 +277,8 @@ class AccountDeleteView(LoginRequiredMixin, TemplateView):
     This is a feature that will be worked on in the far
     future.
     """
-    login_url = '/accounts/login/'
-    redirect_field_name = 'redirect_to'
-    template_name = "accounts/delete_account.html"
-    def get(self, request):
-        form = DeleteAccountForm()
-        return render(request, self.template_name, {'form': form})
-    
-    # Delete the account with the given account number. 
-    def post(self, request):
-        form = DeleteAccountForm(request.POST)
-        if form.is_valid():
-            account_no = form.cleaned_data['no']
-            account = Account.objects.get(no=account_no)
-            account.delete()
-            return redirect('accounts:view_account')
-        
+    pass
+
 
 class InvalidOperation(TemplateView):
     """
