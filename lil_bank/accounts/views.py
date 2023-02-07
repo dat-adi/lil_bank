@@ -95,21 +95,6 @@ class LogoutView(TemplateView):
         return render(request, 'accounts/login.html', {'form': LoginForm()})
 
 
-class UserProfile(TemplateView):
-    """
-    This is the view for displaying the user's profile.
-    """
-    template_name = "accounts/user_profile.html"
-
-    # This is the view for displaying the user's profile.
-    def get(self, request):
-        """
-        Get request to display the user's profile.
-        """
-        customer = Customer.objects.get(id=request.user.id)    
-        user = User.objects.get(id=request.user.id)    
-        return render(request, self.template_name, {'customer': customer, 'user': user})
-
     
 class TransactionView(TemplateView):
     """
@@ -144,13 +129,13 @@ class AccountDetailsView(TemplateView):
     """
     This is the view for displaying the account details.
     """
-    template_name = "accounts/user_profile.html"
+    template_name = "accounts/view_account.html"
     def get(self, request):
         """
         Get request to display the user's profile.
         """
         customer = Customer.objects.get(id=request.user.id)    
-        user = User.objects.get(id=request.user.id)    
+        user = User.objects.get(id=request.user.id)   
         return render(request, self.template_name, {'customer': customer, 'user': user})
 
 
