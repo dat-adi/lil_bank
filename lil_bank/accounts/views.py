@@ -13,6 +13,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Account, Customer, Transaction
+from django.http import JsonResponse
+
+def delete_entry(request, id):
+    # account = Account.objects.get(no=id)
+    # account.delete()
+    # return redirect('accounts:view_account', {'id':id})
+    return render(request, 'accounts/deleted.html')
 
 
 class LoginView(TemplateView):

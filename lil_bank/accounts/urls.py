@@ -1,5 +1,6 @@
 from django.urls import path, include
 from . import views
+from .views import delete_entry
 
 app_name = "accounts"
 
@@ -19,5 +20,7 @@ urlpatterns = [
     path('modify_account/', views.AccountModifyView.as_view(), name="modify_account"),
     path('delete_account/', views.AccountDeleteView.as_view(), name="delete_account"),
 
-    path('invalid_operation/', views.InvalidOperation.as_view(), name="invalid_operation")
+    path('invalid_operation/', views.InvalidOperation.as_view(), name="invalid_operation"),
+    # path('delete_entry/<int:id>/', views.delete_entry, name='delete_entry'),
+    path('deleted', views.delete_entry, name='delete_entry')
 ]
