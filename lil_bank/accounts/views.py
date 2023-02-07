@@ -15,13 +15,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import Account, Customer, Transaction
 from django.http import JsonResponse
 
-def delete_entry(request, id):
-    # account = Account.objects.get(no=id)
-    # account.delete()
-    # return redirect('accounts:view_account', {'id':id})
-    return render(request, 'accounts/deleted.html')
-
-
 class LoginView(TemplateView):
     """
     This is the view for logging in.
@@ -269,7 +262,6 @@ class AccountDetailsView(LoginRequiredMixin, TemplateView):
         listRes = list(map(list, zip(*listNew)))
         return render(request, self.template_name, {'customer': customer, 'user': request.user, 'listRes': listRes})
 
-
 class AccountCreateView(LoginRequiredMixin, TemplateView):
     """
     TODO
@@ -338,3 +330,57 @@ class InvalidOperation(TemplateView):
     performs an invalid operation.
     """
     template_name = "transactions/invalid_operation.html"
+
+def delete_account(request, pk):
+    account = Account.objects.get(no=pk)
+    account.delete()
+    return redirect('accounts:view_account')
+
+# Now, how do I implement this in the view_account.html page? 
+# HTML code for the view_account.html page is as follows:
+
+# {% extends "base.html" %}
+# {% load static %}
+# {% block title %}Account Details{% endblock %}
+# {% block content %}
+#     <div class="container">
+#         <div class="row">
+#             <div class="col-md-12">         
+#                 <h1>Account Details</h1>                
+#                 <table class="table table-striped">             
+#                     <tr>        
+#                         <th>Account Number</th>             
+#                         <th>Balance</th>            
+#                         <th>Type</th>           
+#                         <th>Owner ID</th>           
+#                         <th>Close Account</th>          
+#                     </tr>   
+#                     {% for i in listRes %}                  
+#                     <tr>        
+#                         <td>{{ i.0 }}</td>          
+#                         <td>{{ i.1 }}</td>              
+#                         <td>{{ i.2 }}</td>              
+#                         <td>{{ i.3 }}</td>          
+#                         <td><a href="{% url 'accounts:delete_account' i.0 %}">Close Account</a></td>                    
+#                     </tr>   
+#                     {% endfor %}            
+#                 </table>        
+#             </div>      
+#         </div>      
+#     </div>          
+# {% endblock %}
+
+# Next, we add the URL for the delete_account view in the urls.py file as follows:
+
+# from django.urls import path
+# from . import views
+
+# urlpatterns = [
+#     path('view_account/', views.AccountDetailsView.as_view(), name='view_account'),
+#     path('delete_account/<int:pk>/', views.delete_account, name='delete_account'),
+# ]
+
+# # Now, when I click on the 'Close Account' link, I get the following error:
+
+# AttributeError at /accounts/delete_account/1/
+# 'NoneType' object has no attribute 'delete'

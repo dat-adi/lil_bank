@@ -1,4 +1,6 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Account Details{% endblock %}
 {% block content %}
 <style>
     table{
@@ -61,42 +63,31 @@
             <td style="color: black;">{{ customer.address }}</td>
         </tr>
     </table>
-    <!-- Display accounts_account table from database. -->
-
-    <table style="float: left; padding-right: 10px;">
-        <tr>
-            <td colspan="4">Your Accounts</td>
-        </tr>
-        <tr>
-            <td>Account Number</td>
-            <td>Balance</td>
-            <td>Account Type</td>
-            <td>Owner ID</td>
-            <td> Deposit </td>
-            <td> Withdraw </td>
-            <td> Close Account </td>
-        </tr>
-            {% for i in listRes%}
-                <tr>
-                    <td style="color: black;"><a href="{% url 'accounts:transaction_detail' pk=i.0 %}">{{i.0}}</a></td>
-                    <td style="color: black;">{{i.1}}</td>
-                    <td style="color: black;">{{i.2}}</td>
-                    <td style="color: black;">{{i.3}}</td>
-
-                    <td style="color: black;"> <a href="{% url 'accounts:create_account' %}"> Deposit </a></td>
-
-                    <td style="color: black;"> <a href="{% url 'accounts:create_account' %}"> Withdraw </a></td>
-
-                    <td style="color: black;"> <a href="{% url 'accounts:create_account' %}"> Close Account </a></td>
-
-
-
-                </tr>
-            {% endfor %}
-        
-    </table>
-    <br>
-    <a href="{% url 'dashboard:landing_page' %}" style="float:inherit; font-family: Arial; font-size: 0.5cm; background-color: black; border: 2px solid black;">To Homepage </a>
-
 </body>
-{% endblock content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">         
+                <h1>Account Details</h1>                
+                <table class="table table-striped">             
+                    <tr>        
+                        <th>Account Number</th>             
+                        <th>Balance</th>            
+                        <th>Type</th>           
+                        <th>Owner ID</th>           
+                        <th>Close Account</th>          
+                    </tr>   
+                    {% for i in listRes %}                  
+                    <tr>        
+                        <td><a href="{% url 'accounts:transaction_detail' pk=i.0 %}">{{i.0}}</a></td>          
+                        <td>{{ i.1 }}</td>              
+                        <td>{{ i.2 }}</td>              
+                        <td>{{ i.3 }}</td>          
+                        <td><a href="{% url 'accounts:delete_account' i.0 %}">Close Account</a></td>                    
+                    </tr>   
+                    {% endfor %}            
+                </table>        
+            </div>      
+        </div>      
+    </div>
+    <h2><a href="{% url 'dashboard:landing_page' %}" style="float:inherit; font-family: Arial; font-size: 0.5cm; background-color: black; border: 2px solid black;">To Homepage </a> </h2>         
+{% endblock %}
