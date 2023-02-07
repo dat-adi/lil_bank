@@ -8,7 +8,9 @@ from .forms import (
     CreateAccountForm,
 )
 from django.contrib.auth import login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from .models import Account, Customer, Transaction
 
 
@@ -101,28 +103,32 @@ class LogoutView(TemplateView):
         return render(request, 'accounts/login.html', {'form': LoginForm()})
 
 
-class UserProfile(TemplateView):
+class UserProfile(LoginRequiredMixin, TemplateView):
     """
     This is the view for displaying the user's profile.
     """
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
     template_name = "accounts/user_profile.html"
 
     def get(self, request):
         """
         Get request to display the user's profile.
         """
-        customer = Customer.objects.get(id=request.user.id)    
-        user = User.objects.get(id=request.user.id)    
+        customer = Customer.objects.get(id=request.user.id)
+        user = User.objects.get(id=request.user.id)
         return render(request, self.template_name, {
             'customer': customer,
             'user': user
         })
 
     
-class TransactionView(TemplateView):
+class TransactionView(LoginRequiredMixin, TemplateView):
     """
     This is the view for displaying transactions.
     """
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
     template_name = "transactions/transaction_list.html"
     def get(self, request):
         # TODO: Filter transactions by account number.
@@ -138,10 +144,12 @@ class TransactionView(TemplateView):
         })
 
 
-class BalanceView(TemplateView):
+class BalanceView(LoginRequiredMixin, TemplateView):
     """
     This is the view for displaying the balance of the account.
     """
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
     template_name = "transactions/balance_view.html"
     def get(self, request):
         customer = Customer.objects.get(id=request.user.id)
@@ -149,10 +157,12 @@ class BalanceView(TemplateView):
         return render(request, self.template_name, {'account': account})
 
 
-class DepositView(TemplateView):
+class DepositView(LoginRequiredMixin, TemplateView):
     """
     This is the view for depositing money.
     """
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
     template_name = "transactions/deposit.html"
     def get(self, request):
         form = DepositForm()
@@ -179,11 +189,13 @@ class DepositView(TemplateView):
             return redirect('accounts:balance')
 
 
-class WithdrawView(TemplateView):
+class WithdrawView(LoginRequiredMixin, TemplateView):
     """
     This is the view for withdrawing money from the
     account.
     """
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
     template_name = "transactions/withdraw.html"
     def get(self, request):
         form = WithdrawForm()
@@ -214,10 +226,12 @@ class WithdrawView(TemplateView):
             return redirect('accounts:balance')
 
 
-class AccountDetailsView(TemplateView):
+class AccountDetailsView(LoginRequiredMixin, TemplateView):
     """
     This is the view for displaying the account details.
     """
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
     template_name = "accounts/view_account.html"
     def get(self, request):
         """
@@ -228,35 +242,46 @@ class AccountDetailsView(TemplateView):
         return render(request, self.template_name, {'customer': customer, 'user': user})
 
 
-class AccountCreateView(TemplateView):
+class AccountCreateView(LoginRequiredMixin, TemplateView):
     """
     TODO
     This is a feature that will be worked on in the far
     future.
     """
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
     template_name = "accounts/create_account.html"
+
     def get(self, request):
         form = CreateAccountForm()
         return render(request, self.template_name, {'form': form})
 
 
-class AccountModifyView(TemplateView):
+class AccountModifyView(LoginRequiredMixin, TemplateView):
     """
     TODO
     This is a feature that will be worked on in the far
     future.
     """
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
     pass
 
 
-class AccountDeleteView(TemplateView):
+class AccountDeleteView(LoginRequiredMixin, TemplateView):
     """
     TODO
     This is a feature that will be worked on in the far
     future.
     """
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
     pass
 
 
 class InvalidOperation(TemplateView):
+    """
+    This is a page that is shown in the case that a user
+    performs an invalid operation.
+    """
     template_name = "transactions/invalid_operation.html"
