@@ -23,7 +23,6 @@ class SignUpForm(forms.Form):
     email = forms.EmailField(max_length=254)
     address = forms.CharField(max_length=256)
     phone = forms.CharField(max_length=16)
-    # type = forms.RadioSelect('Account Type', choices=[('Checking', 'Checking'), ('Savings', 'Savings')], initial='Checking')
     password1 = forms.CharField(label="Password", strip=False, widget=forms.PasswordInput)
     password2 = forms.CharField(label="Re-enter Password", strip=False, widget=forms.PasswordInput)
 
@@ -48,3 +47,9 @@ class WithdrawForm(forms.Form):
     This is the form used to deposit cash into an account.
     """
     rm_money = forms.IntegerField()
+
+class CreateAccountForm(forms.Form):
+    """
+    This is the form used to create an account.
+    """
+    type = forms.ChoiceField(choices=[('Checking', 'Checking'), ('Savings', 'Savings')], initial='Checking')
