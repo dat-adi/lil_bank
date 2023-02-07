@@ -280,8 +280,11 @@ class AccountDeleteView(LoginRequiredMixin, TemplateView):
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
     template_name = "accounts/delete_account.html"
+
+    #Display the exisiting accounts.
     def get(self, request):
         form = DeleteAccountForm()
+        #Display the exisiting accounts for the user.
         return render(request, self.template_name, {'form': form})
     
     # Delete the account with the given account number. 
@@ -292,7 +295,7 @@ class AccountDeleteView(LoginRequiredMixin, TemplateView):
             account = Account.objects.get(no=account_no)
             account.delete()
             return redirect('accounts:view_account')
-
+        
 
 class InvalidOperation(TemplateView):
     """
