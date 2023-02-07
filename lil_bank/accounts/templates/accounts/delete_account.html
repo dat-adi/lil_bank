@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <h1>Are you sure you want to delete your account?</h1>
+    <p>Deleting your account will delete all the data of this account.</p>
+    {{ form.as_table }}
+    <button type="submit">Delete Account</button>
+</form>
+{% endblock %}

@@ -53,3 +53,9 @@ class CreateAccountForm(forms.Form):
     This is the form used to create an account.
     """
     type = forms.ChoiceField(choices=[('Checking', 'Checking'), ('Savings', 'Savings')], initial='Checking')
+
+class DeleteAccountForm(forms.Form):
+    """
+    This is the form used to delete an account.
+    """
+    no = forms.IntegerField()

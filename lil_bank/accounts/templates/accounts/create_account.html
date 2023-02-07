@@ -2,8 +2,29 @@
 {% load static %}
 {% block title %}Create Account{% endblock %}
 {% block content %}
+<style>
+    h1{
+        text-align: center;
+        font-size: 1cm;
+        font-family: 'Courier New', Courier, monospace;
+        background-color: rgb(33, 37, 41);
+        align-items: center;
+        color: white;
+        font-weight: bolder;
+    }
+    button{
+        margin-left: auto;
+        margin-right: auto;
+        background-color: rgb(33, 37, 41);
+        color: white;
+        border: 1px solid black;
+        border-radius: 30px;
+        font-size: 0.43cm;
+        font-family: 'Courier New', Courier, monospace;
+    }
+</style>
     <h1>Create Account</h1>
-    <form method="POST">
+    <form method="POST" style="font-size: x-large;">
         {% csrf_token %}
         <table>
             {{ form.as_table }}
