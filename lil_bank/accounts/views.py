@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from .forms import (
     LoginForm,
     SignUpForm,
@@ -21,7 +21,7 @@ class LoginView(TemplateView):
     """
     template_name = "accounts/login.html"
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         form = LoginForm()
         return render(request, self.template_name, {'form': form})
     
@@ -49,7 +49,7 @@ class SignUpView(TemplateView):
     """
     template_name = "accounts/signup.html"
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         form = SignUpForm()
         return render(request, self.template_name, {'form': form})
     
@@ -94,28 +94,42 @@ class LogoutView(TemplateView):
     template_name = "logout.html"
 
     # This is the view for logging out. It logs out the user and redirects to the login page.
-    def get(self, request):
+    def get(self, request, **kwargs):
         # Log out the user.
         logout(request)
         # Redirect to the login page.
         return render(request, 'accounts/login.html', {'form': LoginForm()})
 
 
+class TransactionListView(LoginRequiredMixin, ListView):
+    """
+    This is the list view for transactions.
+    """
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+    context_object_name = "transactions"
+    template_name = "transactions/transaction_list_view.html"
 
-    
-class TransactionView(LoginRequiredMixin, TemplateView):
+    Model = Transaction
+
+    def get_queryset(self):
+        customer = Customer.objects.get(id=self.request.user.id)
+        account = Account.objects.get(owner=customer)
+        queryset = Transaction.objects.filter(account=account)
+
+        return queryset
+
+
+class TransactionDetailView(LoginRequiredMixin, TemplateView):
     """
     This is the view for displaying transactions.
     """
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
-    template_name = "transactions/transaction_list.html"
-    def get(self, request):
-        # TODO: Filter transactions by account number.
+    template_name = "transactions/transaction_detail.html"
 
-        # HACK: For now, fetch the first account and use that.
-        account = Account.objects.first()
-
+    def get(self, request, **kwargs):
+        account = Account.objects.get(no=kwargs['pk'])
         transactions = Transaction.objects.filter(account=account)
 
         return render(request, self.template_name, {
@@ -206,6 +220,23 @@ class WithdrawView(LoginRequiredMixin, TemplateView):
             return redirect('accounts:balance')
 
 
+class AccountListView(LoginRequiredMixin, ListView):
+    """
+    This is the view for listing the different accounts.
+    """
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+    template_name = "accounts/account_list.html"
+
+    Model = Account
+
+    def get_queryset(self):
+        customer = Customer.objects.get(id=self.request.user.id)
+        queryset = Account.objects.filter(owner=customer)
+
+        return queryset
+
+
 class AccountDetailsView(LoginRequiredMixin, TemplateView):
     """
     This is the view for displaying the account details.
@@ -213,12 +244,11 @@ class AccountDetailsView(LoginRequiredMixin, TemplateView):
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
     template_name = "accounts/view_account.html"
-    def get(self, request):
+    def get(self, request, **kwargs):
         """
         Get request to display the user's profile.
         """
-        customer = Customer.objects.get(id=request.user.id)    
-        user = User.objects.get(id=request.user.id)
+        customer = Customer.objects.get(id=request.user.id)
         listBalance = []
         listType = []
         listOwnerID = []
@@ -230,7 +260,7 @@ class AccountDetailsView(LoginRequiredMixin, TemplateView):
             listNo.append(i.no)
         listNew = [listNo, listBalance, listType, listOwnerID]
         listRes = list(map(list, zip(*listNew)))
-        return render(request, self.template_name, {'customer': customer, 'user': user, 'listRes': listRes})
+        return render(request, self.template_name, {'customer': customer, 'user': request.user, 'listRes': listRes})
 
 
 class AccountCreateView(LoginRequiredMixin, TemplateView):
@@ -243,7 +273,7 @@ class AccountCreateView(LoginRequiredMixin, TemplateView):
     redirect_field_name = 'redirect_to'
     template_name = "accounts/create_account.html"
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         form = CreateAccountForm()
         return render(request, self.template_name, {'form': form})
     
@@ -281,10 +311,8 @@ class AccountDeleteView(LoginRequiredMixin, TemplateView):
     redirect_field_name = 'redirect_to'
     template_name = "accounts/delete_account.html"
 
-    #Display the exisiting accounts.
-    def get(self, request):
+    def get(self, request, **kwargs):
         form = DeleteAccountForm()
-        #Display the exisiting accounts for the user.
         return render(request, self.template_name, {'form': form})
     
     # Delete the account with the given account number. 

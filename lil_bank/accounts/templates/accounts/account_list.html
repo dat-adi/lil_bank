@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for account in accounts %}
+<p><a href="{% url 'accounts:account_detail' pk=account.id %}"> Account {{ account.id }}</a></p>
+{% endfor %}
+{% endblock content %}
