@@ -2,7 +2,7 @@
 {% block content %}
 <body>
     <h1>Log in</h1>
-    <form action="{% url 'accounts:login' %}" method="post">
+    <form action="{% url 'accounts:login' %}" method="POST">
         {% csrf_token %}
         <table>
             {{ form.as_table }}

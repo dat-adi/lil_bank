@@ -14,5 +14,6 @@ urlpatterns = [
     path('create_account/', views.AccountCreateView.as_view(), name="create_account"),
     path('view_account/', views.AccountDetailsView.as_view(), name="view_account"),
     path('modify_account/', views.AccountModifyView.as_view(), name="modify_account"),
-    path('delete_account/', views.AccountDeleteView.as_view(), name="delete_account")
+    path('delete_account/', views.AccountDeleteView.as_view(), name="delete_account"),
+    path('invalid_operation/', views.InvalidOperation.as_view(), name="invalid_operation")
 ]

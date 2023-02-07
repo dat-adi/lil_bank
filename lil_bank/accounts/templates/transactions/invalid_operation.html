@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<body>
+<h1>You performed an invalid operation!</h1>
+<p>Chances are that you might have done the following,</p>
+<ol>
+  <li>Attempted to withdraw more than you have.</li>
+  <li>Attempted to deposit more than the 100000 rupee limit.</li>
+  <li>Some other illegal operation that Doge does not approve of.</li>
+</ol>
+<br>
+<p>Redirect yourself to the homepage <a href="{% url 'dashboard:landing_page' %}">here</a>.</p>
+</body>
+{% endblock content %}
