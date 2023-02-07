@@ -6,6 +6,7 @@ from .forms import (
     DepositForm,
     WithdrawForm,
     CreateAccountForm,
+    DeleteAccountForm
 )
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
@@ -259,8 +260,20 @@ class AccountDeleteView(TemplateView):
     This is a feature that will be worked on in the far
     future.
     """
-    pass
-
+    template_name = "accounts/delete_account.html"
+    def get(self, request):
+        form = DeleteAccountForm()
+        return render(request, self.template_name, {'form': form})
+    
+    # Delete the account with the given account number. 
+    def post(self, request):
+        form = DeleteAccountForm(request.POST)
+        if form.is_valid():
+            account_no = form.cleaned_data['no']
+            account = Account.objects.get(no=account_no)
+            account.delete()
+            return redirect('accounts:view_account')
+        
 
 class InvalidOperation(TemplateView):
     template_name = "transactions/invalid_operation.html"
