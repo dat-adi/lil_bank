@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<body>
+    <h1>Deposit some cash into your account!</h1>
+    <p>Current cash: {{ account.balance }}</p>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Deposit</button>
+    </form>
+</body>
+{% endblock content %}

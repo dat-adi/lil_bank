@@ -12,6 +12,7 @@ from .models import Customer , Account
 #         model = Customer
 #         fields = ['account_name', 'account_type', 'account_balance', 'account_owner']
 
+
 class SignUpForm(forms.Form):
     """
     This is the form for signing up.
@@ -24,7 +25,6 @@ class SignUpForm(forms.Form):
     phone = forms.CharField(max_length=16)
     # type = forms.RadioSelect('Account Type', choices=[('Checking', 'Checking'), ('Savings', 'Savings')], initial='Checking')
     password1 = forms.CharField(label="Password", strip=False, widget=forms.PasswordInput)
-    # password2 should match password1
     password2 = forms.CharField(label="Re-enter Password", strip=False, widget=forms.PasswordInput)
 
 
@@ -35,3 +35,16 @@ class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
 
+
+class DepositForm(forms.Form):
+    """
+    This is the form used to deposit cash into an account.
+    """
+    add_money = forms.IntegerField(max_value=100000)
+
+
+class WithdrawForm(forms.Form):
+    """
+    This is the form used to deposit cash into an account.
+    """
+    rm_money = forms.IntegerField()

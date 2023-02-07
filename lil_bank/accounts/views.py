@@ -1,6 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from .forms import LoginForm, SignUpForm
+from .forms import (
+    LoginForm,
+    SignUpForm,
+    DepositForm,
+    WithdrawForm
+)
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from .models import Account, Customer
@@ -101,7 +106,6 @@ class UserProfile(TemplateView):
     """
     template_name = "accounts/user_profile.html"
 
-    # This is the view for displaying the user's profile.
     def get(self, request):
         """
         Get request to display the user's profile.
@@ -122,14 +126,35 @@ class BalanceView(TemplateView):
     """
     This is the view for displaying the balance of the account.
     """
-    pass
+    template_name = "transactions/balance_view.html"
+    def get(self, request):
+        customer = Customer.objects.get(id=request.user.id)
+        account = Account.objects.get(owner_id=customer.id)
+        return render(request, self.template_name, {'account': account})
 
 
 class DepositView(TemplateView):
     """
     This is the view for depositing money.
     """
-    pass
+    template_name = "transactions/deposit.html"
+    def get(self, request):
+        form = DepositForm()
+        customer = Customer.objects.get(id=request.user.id)
+        account = Account.objects.get(owner_id=customer.id)
+        return render(request, self.template_name, {'account': account, 'form': form})
+
+    def post(self, request):
+        form = DepositForm(request.POST)
+
+        if form.is_valid():
+            add_money = form.cleaned_data['add_money']
+            customer = Customer.objects.get(id=request.user.id)
+            account = Account.objects.get(owner_id=customer.id)
+            account.balance += add_money
+            account.save()
+
+            return redirect('accounts:balance')
 
 
 class WithdrawView(TemplateView):
@@ -137,7 +162,27 @@ class WithdrawView(TemplateView):
     This is the view for withdrawing money from the
     account.
     """
-    pass
+    template_name = "transactions/withdraw.html"
+    def get(self, request):
+        form = WithdrawForm()
+        customer = Customer.objects.get(id=request.user.id)
+        account = Account.objects.get(owner_id=customer.id)
+        return render(request, self.template_name, {'account': account, 'form': form})
+
+    def post(self, request):
+        form = WithdrawForm(request.POST)
+
+        if form.is_valid():
+            rm_money = form.cleaned_data['rm_money']
+            customer = Customer.objects.get(id=request.user.id)
+            account = Account.objects.get(owner_id=customer.id)
+            if rm_money > account.balance:
+                return redirect('accounts:invalid_operation')
+
+            account.balance -= rm_money
+            account.save()
+
+            return redirect('accounts:balance')
 
 
 class AccountDetailsView(TemplateView):
@@ -179,3 +224,7 @@ class AccountDeleteView(TemplateView):
     future.
     """
     pass
+
+
+class InvalidOperation(TemplateView):
+    template_name = "transactions/invalid_operation.html"
