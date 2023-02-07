@@ -4,7 +4,8 @@ from .forms import (
     LoginForm,
     SignUpForm,
     DepositForm,
-    WithdrawForm
+    WithdrawForm,
+    CreateAccountForm,
 )
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
@@ -99,21 +100,6 @@ class LogoutView(TemplateView):
         # Redirect to the login page.
         return render(request, 'accounts/login.html', {'form': LoginForm()})
 
-
-class UserProfile(TemplateView):
-    """
-    This is the view for displaying the user's profile.
-    """
-    template_name = "accounts/user_profile.html"
-
-    def get(self, request):
-        """
-        Get request to display the user's profile.
-        """
-        customer = Customer.objects.get(id=request.user.id)    
-        user = User.objects.get(id=request.user.id)    
-        return render(request, self.template_name, {'customer': customer, 'user': user})
-
     
 class TransactionView(TemplateView):
     """
@@ -205,7 +191,10 @@ class AccountCreateView(TemplateView):
     This is a feature that will be worked on in the far
     future.
     """
-    pass
+    template_name = "accounts/create_account.html"
+    def get(self, request):
+        form = CreateAccountForm()
+        return render(request, self.template_name, {'form': form})
 
 
 class AccountModifyView(TemplateView):

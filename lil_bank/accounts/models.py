@@ -10,8 +10,8 @@ class Customer(models.Model):
 
 
 class Account(models.Model):
-    no: models.IntegerField = models.IntegerField(primary_key=True)
-    name: models.CharField = models.CharField(max_length=32)
+    no: models.AutoField = models.AutoField(primary_key=True)
+    # name: models.CharField = models.CharField(max_length=32)
     type: models.CharField = models.CharField(max_length=32)
     owner: models.ForeignKey = models.ForeignKey(
         Customer,
