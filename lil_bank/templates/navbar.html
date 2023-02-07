@@ -10,7 +10,7 @@
                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownTransactions" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Transactions</a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                        <li><a class="dropdown-item" href="{#% url 'accounts:transactions' %#}">Transaction List</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:transactions' %}">Transaction List</a></li>
                         <li><a class="dropdown-item" href="{% url 'accounts:balance' %}">View Balance</a></li>
                         <li><a class="dropdown-item" href="{% url 'accounts:deposit' %}">Deposit Money</a></li>
                         <li><a class="dropdown-item" href="{% url 'accounts:withdraw' %}">Withdraw Money</a></li>
