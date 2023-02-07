@@ -6,6 +6,7 @@ from .forms import (
     DepositForm,
     WithdrawForm,
     CreateAccountForm,
+    DeleteAccountForm
 )
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -278,8 +279,20 @@ class AccountDeleteView(LoginRequiredMixin, TemplateView):
     """
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
-    pass
-
+    template_name = "accounts/delete_account.html"
+    def get(self, request):
+        form = DeleteAccountForm()
+        return render(request, self.template_name, {'form': form})
+    
+    # Delete the account with the given account number. 
+    def post(self, request):
+        form = DeleteAccountForm(request.POST)
+        if form.is_valid():
+            account_no = form.cleaned_data['no']
+            account = Account.objects.get(no=account_no)
+            account.delete()
+            return redirect('accounts:view_account')
+        
 
 class InvalidOperation(TemplateView):
     """

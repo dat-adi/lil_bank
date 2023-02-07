@@ -22,7 +22,7 @@
                         <li><a class="dropdown-item" href="{% url 'accounts:create_account' %}">Open New Account</a></li>
                         <li><a class="dropdown-item" href="{% url 'accounts:view_account' %}">View Account</a></li>
                         <li><a class="dropdown-item" href="{#% url 'accounts:modify_account' %#}">Modify Account</a></li>
-                        <li><a class="dropdown-item" href="{#% url 'accounts:delete_account' %#}">Close Account</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:delete_account' %}">Close Account</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
