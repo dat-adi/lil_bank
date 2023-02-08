@@ -23,9 +23,60 @@ class SignUpForm(forms.Form):
     email = forms.EmailField(max_length=254)
     address = forms.CharField(max_length=256)
     phone = forms.CharField(max_length=16)
-    # type = forms.RadioSelect('Account Type', choices=[('Checking', 'Checking'), ('Savings', 'Savings')], initial='Checking')
     password1 = forms.CharField(label="Password", strip=False, widget=forms.PasswordInput)
     password2 = forms.CharField(label="Re-enter Password", strip=False, widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        super(SignUpForm, self).__init__(*args, **kwargs)
+
+        self.fields['first_name'].widget.attrs.update({
+            'type': 'text',
+            'class': 'form-control',
+            'placeholder': 'Enter your first name...'
+        })
+
+        self.fields['last_name'].widget.attrs.update({
+            'type': 'text',
+            'class': 'form-control',
+            'placeholder': 'Enter your last name...'
+        })
+
+        self.fields['username'].widget.attrs.update({
+            'type': 'text',
+            'class': 'form-control',
+            'placeholder': 'Enter your name...'
+        })
+
+        self.fields['email'].widget.attrs.update({
+            'type': 'email',
+            'class': 'form-control',
+            'placeholder': 'Enter your email...'
+        })
+
+        self.fields['address'].widget.attrs.update({
+            'type': 'text',
+            'class': 'form-control',
+            'placeholder': 'Enter your address...',
+            'style': 'height: 10rem'
+        })
+
+        self.fields['phone'].widget.attrs.update({
+            'type': 'tel',
+            'class': 'form-control',
+            'placeholder': 'Enter your phone number...'
+        })
+
+        self.fields['password1'].widget.attrs.update({
+            'type': 'password',
+            'class': 'form-control',
+            'placeholder': 'Enter your password...'
+        })
+
+        self.fields['password2'].widget.attrs.update({
+            'type': 'password',
+            'class': 'form-control',
+            'placeholder': 'Re-enter your password...'
+        })
 
 
 class LoginForm(forms.Form):
@@ -35,6 +86,19 @@ class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
 
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({
+            'type': 'text',
+            'class': 'form-control',
+            'placeholder': 'Enter your name...'
+        })
+        self.fields['password'].widget.attrs.update({
+            'type': 'password',
+            'class': 'form-control',
+            'placeholder': 'Enter your password...'
+        })
+
 
 class DepositForm(forms.Form):
     """
@@ -42,9 +106,43 @@ class DepositForm(forms.Form):
     """
     add_money = forms.IntegerField(max_value=100000)
 
+    def __init__(self, *args, **kwargs):
+        super(DepositForm, self).__init__(*args, **kwargs)
+        self.fields['add_money'].widget.attrs.update({
+            'type': 'number',
+            'class': 'form-control',
+            'placeholder': 'Enter the deposit amount...'
+        })
+
 
 class WithdrawForm(forms.Form):
     """
     This is the form used to deposit cash into an account.
     """
     rm_money = forms.IntegerField()
+
+    def __init__(self, *args, **kwargs):
+        super(WithdrawForm, self).__init__(*args, **kwargs)
+        self.fields['rm_money'].widget.attrs.update({
+            'type': 'number',
+            'class': 'form-control',
+            'placeholder': 'Enter the withdrawal amount...'
+        })
+
+
+class CreateAccountForm(forms.Form):
+    """
+    This is the form used to create an account.
+    """
+    type = forms.ChoiceField(choices=[('Checking', 'Checking'), ('Savings', 'Savings')], initial='Checking')
+
+    def __init__(self, *args, **kwargs):
+        super(CreateAccountForm, self).__init__(*args, **kwargs)
+        self.fields['type'].widget.attrs.update({'class': 'form-control'})
+
+
+class DeleteAccountForm(forms.Form):
+    """
+    This is the form used to delete an account.
+    """
+    no = forms.IntegerField()

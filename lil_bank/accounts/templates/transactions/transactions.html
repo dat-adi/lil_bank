@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load humanize %}
+<section class="py-5">
+    <h1 class="fw-bolder">Transaction History</h1>
+    <p class="lead fw-normal text-muted mb-0">
+        Current cash: &#x20b9; {{ account.balance|floatformat:2|intcomma }}
+    </p>
+    <hr style="border: 0.5px solid black; opacity: 1;" />
+    <table style="width: 60vw;">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th style="text-align: right;">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+                <tr>
+                    <td>
+                        {% if transaction.withdrawal %}
+                            Withdrawal
+                        {% else %}
+                            Deposit
+                        {% endif %}
+                    </td>
+                    <td style="text-align: right;">
+                        &#x20b9; {{ transaction.amount|floatformat:2|intcomma }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <hr style="border: 0.5px solid black; opacity: 1;" />
+</section>
+{% endblock content %}

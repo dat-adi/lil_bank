@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block header %}
+{% load humanize %}
 <header class="bg-dark py-5">
     <div class="container px-5">
         <div class="row gx-5 align-items-center justify-content-center">
@@ -9,7 +10,9 @@
                     <p class="lead fw-normal text-white-50 mb-4">What's your situation like?</p>
                 </div>
             </div>
-            <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center text-white"><h1>{{ account.balance }}</h1></div>
+            <div
+            class="col-xl-5 col-xxl-6 d-none d-xl-block text-center text-white"
+            ><h1>&#x20b9; {{ account.balance|floatformat:2|intcomma }}</h1></div>
         </div>
     </div>
 </header>

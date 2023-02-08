@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="bg-light py-5">
+    <div class="container px-5 my-5">
+        <div class="text-center mb-5">
+            <h1 class="fw-bolder">Account Operations</h1>
+            <p class="lead fw-normal text-muted mb-0">Perform your selected operation.</p>
+        </div>
+        <div class="row gx-5 justify-content-center">
+            {% for i in account %}
+            <!--Transactions Card-->
+            <div class="col-lg-6 col-xl-4">
+                <div class="card mb-5 mb-xl-0">
+                    <div class="card-body p-5">
+                        <div class="small text-uppercase fw-bold text-muted">Transactions</div>
+                        <br>
+                        <div class="d-grid"><a class="btn btn-outline-primary" href="{% url 'accounts:transactions' pk=i.no %}">Report</a></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Deposit Card-->
+            <div class="col-lg-6 col-xl-4">
+                <div class="card mb-5 mb-xl-0">
+                    <div class="card-body p-5">
+                        <div class="small text-uppercase fw-bold">
+                            Deposit
+                        </div>
+                        <br>
+                        <div class="d-grid"><a class="btn btn-primary" href="{% url 'accounts:deposit' pk=i.no %}">Deposit</a></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Withdraw Card-->
+            <div class="col-lg-6 col-xl-4">
+                <div class="card">
+                    <div class="card-body p-5">
+                        <div class="small text-uppercase fw-bold text-muted">Withdraw</div>
+                        <br>
+                        <div class="d-grid"><a class="btn btn-outline-primary" href="{% url 'accounts:withdraw' pk=i.no %}">Withdraw</a></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Balance check Card-->
+            <div class="col-lg-6 col-xl-4">
+                <div class="card">
+                    <div class="card-body p-5">
+                        <div class="small text-uppercase fw-bold text-muted">Balance</div>
+                        <br>
+                        <div class="d-grid"><a class="btn btn-outline-primary" href="{% url 'accounts:balance' pk=i.no %}">Check Balance</a></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content %}

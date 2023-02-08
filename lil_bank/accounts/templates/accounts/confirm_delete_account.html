@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2 style="color: rgba(156, 9, 9, 0.802); padding-left: 25px; padding-top: 20px; font-size: 1.75cm;">Are you sure you want to delete account {{ account.no }}?</h2>
+  <style>
+    table, th, td {
+        border: 1px black;
+        padding: 15px;
+    }
+</style>
+  <form method="post">
+    {% csrf_token %}
+    <table>
+    <tr>
+      <td><input style="font-size: 1.5cm; border: 1px solid black; border-radius: 5px; background-color: beige; padding: 10px; color: rgb(255, 0, 0);" type="submit" value="Confirm"></td>
+      
+      <td><a href="{% url 'accounts:view_account' %}" style="font-size: 1.75cm; border: 1px solid black; border-radius: 5px; background-color: beige; padding: 10px; color: green;">Cancel</a></td>
+  </tr>
+  </table>
+  </form>
+{% endblock %}

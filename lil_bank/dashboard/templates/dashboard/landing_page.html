@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block header %}
-<header class="bg-dark py-5">
+{% load static %}
+<header class="bg-dark py-5">    
     <div class="container px-5">
         <div class="row gx-5 align-items-center justify-content-center">
             <div class="col-lg-8 col-xl-7 col-xxl-6">
@@ -9,11 +10,18 @@
                     <p class="lead fw-normal text-white-50 mb-4">Because we care when the world don't.</p>
                     <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                         <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Get Started</a>
-                        <a class="btn btn-outline-light btn-lg px-4" href="#!">Learn More</a>
+                        <a class="btn btn-outline-light btn-lg px-4" href="about">Learn More</a>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="https://pbs.twimg.com/media/DFowjyZUAAAxLik?format=jpg&name=medium" alt="..." /></div>
+            <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center">        
+                <div class="slider">
+                    <img src="{% static 'image1' %}" id="slider-image">
+                </div>
+                <link rel="stylesheet" type="text/css" href="{% static 'slider.css' %}">
+                <script src="{% static 'slider.js' %}"></script>
+            </div>
+
         </div>
     </div>
 </header>

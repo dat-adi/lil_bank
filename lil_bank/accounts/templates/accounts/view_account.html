@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}Account Details{% endblock %}
+{% block header %}
+<header class="bg-dark py-5">
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center justify-content-center">
+            <div class="col-lg-8 col-xl-7 col-xxl-6">
+                <div class="my-5 text-center text-xl-start">
+                    <h1 class="display-5 fw-bolder text-white mb-2">Your Account Details</h1>
+                    <br>
+                    <p class="lead fw-normal text-white-50 mb-4">Name: {{ customer.first_name }} {{ customer.last_name }}</p>
+                    <p class="lead fw-normal text-white-50 mb-4">Username: {{ user.username }}</p>
+                    <p class="lead fw-normal text-white-50 mb-4">Email: {{ user.email }}</p>
+                    <p class="lead fw-normal text-white-50 mb-4">Phone Number: {{ customer.phone }}</p>
+                    <p class="lead fw-normal text-white-50 mb-4">Address: {{ customer.address }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock header %}
+{% block content %}
+<section class="py-5 bg-light">
+    <div class="container px-5">
+        <div class="row gx-5">
+            <div class="col-xl-8">
+                <h2 class="fw-bolder fs-5 mb-4">Your Accounts</h2>
+                <!-- Account items-->
+                {% for i in listRes %}
+                <div class="mb-4">
+                    <div class="small text-muted">{{ i.0 }}</div>
+                    <a class="link-dark" href="{% url 'accounts:account_detail' pk=i.0 %}"><h3>{{ i.2 }}</h3></a>
+                    <h5>Balance: &#x20b9; {{ i.1|floatformat:2|intcomma }}</h5>
+                    <h6><a class="link-dark" href="{% url 'accounts:delete_account' i.0 %}">Close Account</a></h6>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-xl-4">
+                <div class="card border-0 h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex h-100 align-items-center justify-content-center">
+                            <div class="text-center">
+                                <div class="h6 fw-bolder">Contact</div>
+                                <p class="text-muted mb-4">
+                                    For account related inquiries, email us at
+                                    <br />
+                                    <a href="#!">doge.support@lilbank.com</a>
+                                </p>
+                                <div class="h6 fw-bolder">Follow us</div>
+                                <a class="fs-5 px-2 link-dark" href="#!"><i class="bi-twitter"></i></a>
+                                <a class="fs-5 px-2 link-dark" href="#!"><i class="bi-facebook"></i></a>
+                                <a class="fs-5 px-2 link-dark" href="#!"><i class="bi-linkedin"></i></a>
+                                <a class="fs-5 px-2 link-dark" href="#!"><i class="bi-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h5>Go back to the <a href="{% url 'dashboard:landing_page' %}">Homepage </a></h5>
+        </div>
+    </div>
+</section>
+{% endblock content %}

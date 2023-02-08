@@ -43,17 +43,17 @@ Bank needs to display a summarized report about customers.
 - [X] Only authorized user should access the portal’s features.
 - [X] Validate the Web form to get the required data 
 - [X] Write methods for declaring fields to be used for storing structured data 
-- [ ] Validate the structure of data.  
+- [X] Validate the structure of data.  
 - [ ] Display summarized data. 
 - [ ] Can have caching management for improved performance 
-- [ ] State Management using sessions
+- [X] State Management using sessions
 - [X] User profiles 
-- [ ] Web portal should be compatible with all browsers 
+- [X] Web portal should be compatible with all browsers 
 
 ## Other Challenges/Features
 
 - [X] Use bootstrap for design pages
 - [ ] Provide authentication, authorization using oauth or similar package
-- [ ] Create restful apis for app features
-- [ ] Provide swagger UI for rest api usage
+- [X] Create restful apis for app features
+- [X] Provide swagger UI for rest api usage
 - [ ] If possible or it’s optional, create micro-services for the app components using docker
