@@ -10,6 +10,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownTransactions" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Accounts</a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                        <li><a class="dropdown-item" href="{% url 'accounts:create_account' %}">Open New Account</a></li>
                         <li><a class="dropdown-item" href="{% url 'accounts:account_list' %}">View Accounts</a></li>
                         <li><a class="dropdown-item" href="{% url 'accounts:view_account' %}">Account Summary</a></li>
                     </ul>
