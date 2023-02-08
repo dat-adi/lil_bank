@@ -38,10 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'accounts.apps.AccountsConfig',
     'dashboard.apps.DashboardConfig',
     'restful_api.apps.RestfulApiConfig',
-    'drf_yasg'
+    'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
