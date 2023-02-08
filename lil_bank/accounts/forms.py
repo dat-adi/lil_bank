@@ -26,6 +26,57 @@ class SignUpForm(forms.Form):
     password1 = forms.CharField(label="Password", strip=False, widget=forms.PasswordInput)
     password2 = forms.CharField(label="Re-enter Password", strip=False, widget=forms.PasswordInput)
 
+    def __init__(self, *args, **kwargs):
+        super(SignUpForm, self).__init__(*args, **kwargs)
+
+        self.fields['first_name'].widget.attrs.update({
+            'type': 'text',
+            'class': 'form-control',
+            'placeholder': 'Enter your first name...'
+        })
+
+        self.fields['last_name'].widget.attrs.update({
+            'type': 'text',
+            'class': 'form-control',
+            'placeholder': 'Enter your last name...'
+        })
+
+        self.fields['username'].widget.attrs.update({
+            'type': 'text',
+            'class': 'form-control',
+            'placeholder': 'Enter your name...'
+        })
+
+        self.fields['email'].widget.attrs.update({
+            'type': 'email',
+            'class': 'form-control',
+            'placeholder': 'Enter your email...'
+        })
+
+        self.fields['address'].widget.attrs.update({
+            'type': 'text',
+            'class': 'form-control',
+            'placeholder': 'Enter your address...',
+            'style': 'height: 10rem'
+        })
+
+        self.fields['phone'].widget.attrs.update({
+            'type': 'tel',
+            'class': 'form-control',
+            'placeholder': 'Enter your phone number...'
+        })
+
+        self.fields['password1'].widget.attrs.update({
+            'type': 'password',
+            'class': 'form-control',
+            'placeholder': 'Enter your password...'
+        })
+
+        self.fields['password2'].widget.attrs.update({
+            'type': 'password',
+            'class': 'form-control',
+            'placeholder': 'Re-enter your password...'
+        })
 
 class LoginForm(forms.Form):
     """
@@ -33,6 +84,19 @@ class LoginForm(forms.Form):
     """
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({
+            'type': 'text',
+            'class': 'form-control',
+            'placeholder': 'Enter your name...'
+        })
+        self.fields['password'].widget.attrs.update({
+            'type': 'password',
+            'class': 'form-control',
+            'placeholder': 'Enter your password...'
+        })
 
 
 class DepositForm(forms.Form):

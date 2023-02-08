@@ -22,7 +22,6 @@ urlpatterns = [
 
     # Account CRUD Pages
     path('create_account/', views.AccountCreateView.as_view(), name="create_account"),
-    path('modify_account/', views.AccountModifyView.as_view(), name="modify_account"),
     path('delete_account/', views.AccountDeleteView.as_view(), name="delete_account"),
     # Miscellaneous Routes
     path('invalid_operation/', views.InvalidOperation.as_view(), name="invalid_operation"),

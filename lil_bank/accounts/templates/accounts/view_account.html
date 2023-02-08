@@ -30,7 +30,7 @@
                 {% for i in listRes %}
                 <div class="mb-4">
                     <div class="small text-muted">{{ i.0 }}</div>
-                    <a class="link-dark" href="{% url 'accounts:transactions' pk=i.0 %}"><h3>{{ i.2 }}</h3></a>
+                    <a class="link-dark" href="{% url 'accounts:account_detail' pk=i.0 %}"><h3>{{ i.2 }}</h3></a>
                     <h5>Balance: {{ i.1 }}</h5>
                     <h6><a class="link-dark" href="{% url 'accounts:delete_account' i.0 %}">Close Account</a></h6>
                 </div>

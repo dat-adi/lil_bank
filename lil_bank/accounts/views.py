@@ -276,22 +276,9 @@ class AccountCreateView(LoginRequiredMixin, TemplateView):
             return redirect('accounts:view_account')
 
 
-class AccountModifyView(LoginRequiredMixin, TemplateView):
-    """
-    TODO
-    This is a feature that will be worked on in the far
-    future.
-    """
-    login_url = '/accounts/login/'
-    redirect_field_name = 'redirect_to'
-    pass
-
-
 class AccountDeleteView(LoginRequiredMixin, TemplateView):
     """
-    TODO
-    This is a feature that will be worked on in the far
-    future.
+    This view deletes an account.
     """
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
