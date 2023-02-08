@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Account, Customer, Transaction
 from django.http import JsonResponse
+from django.contrib import messages
 
 class LoginView(TemplateView):
     """
@@ -333,5 +334,8 @@ class InvalidOperation(TemplateView):
 
 def delete_account(request, pk):
     account = Account.objects.get(no=pk)
-    account.delete()
-    return redirect('accounts:view_account')
+    if request.method == 'POST':
+        account.delete()
+        messages.success(request, 'Your account has been successfully deleted.')
+        return redirect('accounts:view_account')
+    return render(request, 'accounts/confirm_delete_account.html', {'account': account})

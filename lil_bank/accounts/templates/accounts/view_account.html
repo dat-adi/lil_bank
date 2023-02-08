@@ -82,10 +82,11 @@
                         <td>{{ i.1 }}</td>              
                         <td>{{ i.2 }}</td>              
                         <td>{{ i.3 }}</td>          
-                        <td><a href="{% url 'accounts:delete_account' i.0 %}">Close Account</a></td>                    
+                        <td><a href="{% url 'accounts:delete_account' i.0 %}">Close Account</a></td>                   
                     </tr>   
                     {% endfor %}            
                 </table>        
+
             </div>      
         </div>      
     </div>
