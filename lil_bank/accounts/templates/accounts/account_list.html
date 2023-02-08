@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container px-5 my-5">
-    <div class="text-center mb-5">
+    <div>
         <h3>Here's a list of accounts associated to this user,</h3>
         <ol>
             {% for account in accounts %}
             <li>
-                <a href="{% url 'accounts:account_detail' pk=account.no %}"> Account {{ account.no }}</a>
+                <a href="{% url 'accounts:account_detail' pk=account.no %}">
+                    Account {{ account.no }}
+                </a>
+                ({{ account.type|title }})
             </li>
             {% endfor %}
         </ol>

@@ -220,7 +220,7 @@ class AccountListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self, **kwargs):
         customer = Customer.objects.get(id=self.request.user.id)
-        queryset = Account.objects.filter(owner=customer)
+        queryset = Account.objects.filter(owner=customer).order_by('no')
 
         return queryset
 
