@@ -78,6 +78,7 @@ class SignUpForm(forms.Form):
             'placeholder': 'Re-enter your password...'
         })
 
+
 class LoginForm(forms.Form):
     """
     This is the form for logging in.
@@ -105,12 +106,28 @@ class DepositForm(forms.Form):
     """
     add_money = forms.IntegerField(max_value=100000)
 
+    def __init__(self, *args, **kwargs):
+        super(DepositForm, self).__init__(*args, **kwargs)
+        self.fields['add_money'].widget.attrs.update({
+            'type': 'number',
+            'class': 'form-control',
+            'placeholder': 'Enter the deposit amount...'
+        })
+
 
 class WithdrawForm(forms.Form):
     """
     This is the form used to deposit cash into an account.
     """
     rm_money = forms.IntegerField()
+
+    def __init__(self, *args, **kwargs):
+        super(WithdrawForm, self).__init__(*args, **kwargs)
+        self.fields['rm_money'].widget.attrs.update({
+            'type': 'number',
+            'class': 'form-control',
+            'placeholder': 'Enter the withdrawal amount...'
+        })
 
 
 class CreateAccountForm(forms.Form):

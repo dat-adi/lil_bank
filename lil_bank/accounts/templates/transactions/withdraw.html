@@ -1,12 +1,44 @@
 {% extends 'base.html' %}
+{% block header %}
+<header class="bg-dark py-5">
+  <div class="container px-5">
+    <div class="row gx-5 align-items-center justify-content-center">
+      <div class="col-lg-8 col-xl-7 col-xxl-6">
+        <div class="my-5 text-center text-xl-start">
+          <h1 class="display-5 fw-bolder text-white mb-2">Withdraw some cash from your account!</h1>
+          <p class="lead fw-normal text-white-50 mb-4">Current cash: {{ account.balance }}</p>
+          <form method="POST">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+              <label class="fw-normal text-white mb-2">Withdraw</label>
+              {{ form.rm_money }}
+            </div>
+            <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Withdraw</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock header %}
 {% block content %}
-<body>
-<h1>Withdraw some cash from your account!</h1>
-<p>Current cash: {{ account.balance }}</p>
-<form method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Withdraw</button>
-</form>
-</body>
+<div class="py-5 bg-light">
+  <div class="container px-5 my-5">
+    <div class="row gx-5 justify-content-center">
+      <div class="col-lg-10 col-xl-7">
+        <div class="text-center">
+          <div class="fs-4 mb-4 fst-italic">"Money often costs too much."</div>
+          <div class="d-flex align-items-center justify-content-center">
+            <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+            <div class="fw-bold">
+              Ralph Waldo Emerson
+              <span class="fw-bold text-primary mx-1">/</span>
+              Philosopher
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}

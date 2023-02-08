@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Transaction History:</h1>
-    <p>Current cash: {{ account.balance }}</p>
+<section class="py-5">
+    <h1 class="fw-bolder">Transaction History</h1>
+    <p class="lead fw-normal text-muted mb-0">Current cash: {{ account.balance }}</p>
     <table border="1px" width="100%">
         <thead>
             <tr>
@@ -24,4 +25,5 @@
             {% endfor %}
         </tbody>
     </table>
+</section>
 {% endblock content %}
