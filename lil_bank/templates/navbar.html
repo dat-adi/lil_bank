@@ -7,22 +7,11 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:landing_page' %}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:about_page' %}">About</a></li>
                 {% if user.is_authenticated %}
-               <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownTransactions" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Transactions</a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                        <li><a class="dropdown-item" href="{% url 'accounts:transactions' %}">Transaction List</a></li>
-                        <li><a class="dropdown-item" href="{% url 'accounts:balance' %}">View Balance</a></li>
-                        <li><a class="dropdown-item" href="{% url 'accounts:deposit' %}">Deposit Money</a></li>
-                        <li><a class="dropdown-item" href="{% url 'accounts:withdraw' %}">Withdraw Money</a></li>
-                    </ul>
-                </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownAccounts" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account Services</a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownTransactions" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Accounts</a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                        <li><a class="dropdown-item" href="{% url 'accounts:create_account' %}">Open New Account</a></li>
-                        <li><a class="dropdown-item" href="{% url 'accounts:view_account' %}">View Account</a></li>
-                        <li><a class="dropdown-item" href="{#% url 'accounts:modify_account' %#}">Modify Account</a></li>
-                        <li><a class="dropdown-item" href="{% url 'accounts:delete_account' %}">Close Account</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:account_list' %}">View Accounts</a></li>
+                        <li><a class="dropdown-item" href="{#% url 'accounts:view_account' %#}">Account Summary</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
