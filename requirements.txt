@@ -11,6 +11,7 @@ django-stubs-ext>=0.7.0
 djangorestframework>=3.14.0
 djangorestframework-stubs>=1.8.0
 drf-yasg>=1.21.4
+drf-yasg-stubs>=0.1.4
 idna>=3.4
 inflection>=0.5.1
 itypes>=1.2.0
