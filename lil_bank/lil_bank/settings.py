@@ -12,12 +12,16 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import dotenv_values
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Setting up environment variables
+config = dotenv_values('.env')
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*4ms-xu=-vl^cox0^p97w8rg#hwz)bkno^!(0w6shtmwa%n#98'
+SECRET_KEY = config['DJANGO_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -78,8 +82,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'lil_bank',
-        'USER': 'postgres',
-        'PASSWORD': 'Finserv@2023',
+        'USER': config['POSTGRES_USER'],
+        'PASSWORD': config['POSTGRES_PASSWORD'],
         'HOST': 'localhost',
         'PORT': '5432',
     }
