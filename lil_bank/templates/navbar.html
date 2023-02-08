@@ -11,7 +11,7 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdownTransactions" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Accounts</a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
                         <li><a class="dropdown-item" href="{% url 'accounts:account_list' %}">View Accounts</a></li>
-                        <li><a class="dropdown-item" href="{#% url 'accounts:view_account' %#}">Account Summary</a></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:view_account' %}">Account Summary</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>

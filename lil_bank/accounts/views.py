@@ -232,7 +232,7 @@ class AccountDetailView(LoginRequiredMixin, TemplateView):
     """
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
-    template_name = "accounts/account_detail.html"
+    template_name = "accounts/view_account.html"
 
     def get(self, request, **kwargs):
         """
