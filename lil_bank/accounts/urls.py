@@ -11,7 +11,7 @@ urlpatterns = [
 
     # Account Template Pages
     path('', views.AccountListView.as_view(), name="account_list"),
-    path('<int:pk>/', views.AccountDetailView.as_view(), name="account_detail"),
+    path('<int:pk>/', views.AccountView.as_view(), name="account_detail"),
 
     # Operation Pages
     path('<int:pk>/transactions/', views.TransactionView.as_view(), name="transactions"),

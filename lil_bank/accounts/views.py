@@ -215,37 +215,45 @@ class AccountListView(LoginRequiredMixin, ListView):
 
     Model = Account
 
-    def get_queryset(self):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['accounts'] = self.get_queryset()
+
+        return context
+
+    def get_queryset(self, **kwargs):
         customer = Customer.objects.get(id=self.request.user.id)
         queryset = Account.objects.filter(owner=customer)
 
         return queryset
 
 
-class AccountDetailsView(LoginRequiredMixin, TemplateView):
+class AccountDetailView(LoginRequiredMixin, TemplateView):
     """
+    TODO: Delete this class.
     This is the view for displaying the account details.
     """
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
-    template_name = "accounts/view_account.html"
+    template_name = "accounts/account_detail.html"
+
     def get(self, request, **kwargs):
         """
         Get request to display the user's profile.
         """
         customer = Customer.objects.get(id=request.user.id)
-        listBalance = []
-        listType = []
-        listOwnerID = []
-        listNo = []
+        list_balance = []
+        list_type = []
+        list_owner_id = []
+        list_no = []
         for i in Account.objects.filter(owner_id=request.user.id):
-            listBalance.append(i.balance)
-            listType.append(i.type)
-            listOwnerID.append(i.owner_id)
-            listNo.append(i.no)
-        listNew = [listNo, listBalance, listType, listOwnerID]
-        listRes = list(map(list, zip(*listNew)))
-        return render(request, self.template_name, {'customer': customer, 'user': request.user, 'listRes': listRes})
+            list_balance.append(i.balance)
+            list_type.append(i.type)
+            list_owner_id.append(i.owner_id)
+            list_no.append(i.no)
+        list_new = [list_no, list_balance, list_type, list_owner_id]
+        list_res = list(map(list, zip(*list_new)))
+        return render(request, self.template_name, {'customer': customer, 'user': request.user, 'listRes': list_res})
 
 
 class AccountCreateView(LoginRequiredMixin, TemplateView):
@@ -326,10 +334,13 @@ class AccountView(LoginRequiredMixin, TemplateView):
     """
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
-    template_name = "accounts/account.html"
+    template_name = "accounts/account_detail.html"
 
     def get(self, request, **kwargs):
-        accounts = Account.objects.filter(owner=self.request.user.id)
+        account = Account.objects.filter(
+            owner=self.request.user.id,
+            no=kwargs['pk']
+        )
         return render(request, self.template_name, {
-            'accounts': accounts
+            'account': account
         })
