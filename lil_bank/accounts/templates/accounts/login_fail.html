@@ -15,18 +15,20 @@
             padding: 15px;
         }
     </style>
-    <h1 style="font-size: 1cm; color: red; padding: 15px;">You are not an user.</h1>
-    <h1 style="font-size: 1cm; color: red; padding: 15px;">Please sign up first or enter the correct username and password.</h1>
+    <div style="text-align: center; margin-top: 13%; margin-left: 10%; margin-right: 10%; border: 3px solid black; padding: 10px; border-radius: 30px;">
+    <h1 style="font-size: 0.5cm; color: red; padding: 15px; font-weight: bolder;">You are not an user.</h1>
+    <h1 style="font-size: 0.5cm; color: red; padding: 15px; font-weight: bolder;">Please sign up first or enter the correct username and password.</h1>
     <br>
 
     <center>
     <table>
         <tr> 
-            <td><a href="{% url 'accounts:signup' %}" style="font-size: 1.5cm; border: 1px solid black; border-radius: 5px; background-color: beige; padding: 10px;">Sign up</a></td>
-            <td><a href="{% url 'accounts:login' %}" style="font-size: 1.5cm; border: 1px solid black; border-radius: 5px; background-color: beige; padding: 10px;">Back to Login</a></td>
+            <td><a href="{% url 'accounts:signup' %}" style="font-size: 0.5cm; border: 1px solid black; border-radius: 5px; background-color: rgb(33, 103, 223); padding: 10px; text-decoration: none; color: azure;">Sign up</a></td>
+            <td><a href="{% url 'accounts:login' %}" style="font-size: 0.5cm; border: 1px solid black; border-radius: 5px; background-color: rgb(33, 103, 223); padding: 10px; text-decoration: none; color: azure;">Back to Login</a></td>
         </tr>
     </table>
     </center>
+    </div>
 </body>
 </html></h1>
 {% endblock content %}
