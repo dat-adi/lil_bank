@@ -1,20 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2 style="color: rgba(156, 9, 9, 0.802); padding-left: 25px; padding-top: 20px; font-size: 1.75cm;">Are you sure you want to delete account {{ account.no }}?</h2>
-  <style>
-    table, th, td {
-        border: 1px black;
-        padding: 15px;
-    }
+<style>
+  table, th, td {
+      border: 1px black;
+      padding: 15px;
+  }
 </style>
+<div style="text-align: center; margin-top: 13%; margin-left: 10%; margin-right: 10%; border: 3px solid black; padding: 10px; border-radius: 30px;">
+  <h2 style="color: red; padding-left: 25px; padding-top: 20px; font-size: 0.5cm;">Are you sure you want to delete account {{ account.no }}?</h2>
   <form method="post">
     {% csrf_token %}
+    <center>
     <table>
     <tr>
-      <td><input style="font-size: 1.5cm; border: 1px solid black; border-radius: 5px; background-color: beige; padding: 10px; color: rgb(255, 0, 0);" type="submit" value="Confirm"></td>
+      <td><input style="font-size: 0.5cm; border: 1px solid black; border-radius: 5px; background-color: rgb(33, 103, 223); padding: 10px; text-decoration: none; color: azure; font-weight:200;" type="submit" value="Confirm"></td>
       
-      <td><a href="{% url 'accounts:view_account' %}" style="font-size: 1.75cm; border: 1px solid black; border-radius: 5px; background-color: beige; padding: 10px; color: green;">Cancel</a></td>
+      <td><a href="{% url 'accounts:view_account' %}" style="font-size: 0.6cm;font-weight: 100; border: 1px solid black; border-radius: 5px; background-color: rgb(33, 103, 223); padding: 10px; text-decoration: none; color: azure;">Cancel</a></td>
   </tr>
   </table>
+</center>
   </form>
+</div>
 {% endblock %}
