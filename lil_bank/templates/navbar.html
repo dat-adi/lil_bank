@@ -7,17 +7,35 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:landing_page' %}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:about_page' %}">About</a></li>
                 {% if user.is_authenticated %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownTransactions" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Accounts</a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                        <li><a class="dropdown-item" href="{% url 'accounts:account_list' %}">View Accounts</a></li>
-                        <li><a class="dropdown-item" href="{% url 'accounts:view_account' %}">Account Summary</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownTransactions" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Accounts</a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                            <li><a class="dropdown-item" href="{% url 'accounts:account_list' %}">View Accounts</a></li>
+                            <li><a class="dropdown-item" href="{% url 'accounts:view_account' %}">Account Summary</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            id="navbarDropdownTransactions"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >{{ user.username }}</a>
+                        <ul
+                            class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="navbarDropdownBlog"
+                        >
+                            <li><a
+                                class="dropdown-item"
+                                href="{% url 'accounts:logout' %}"
+                            >Logout</a></li>
+                        </ul>
+                    </li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Log In</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'accounts:signup' %}">Sign Up</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Log In</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'accounts:signup' %}">Sign Up</a></li>
                 {% endif %}
             </ul>
         </div>
