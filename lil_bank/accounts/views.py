@@ -252,12 +252,8 @@ class AccountDetailView(LoginRequiredMixin, TemplateView):
         list_res = list(map(list, zip(*list_new)))
         return render(request, self.template_name, {'customer': customer, 'user': request.user, 'listRes': list_res})
 
+
 class AccountCreateView(LoginRequiredMixin, TemplateView):
-    """
-    TODO
-    This is a feature that will be worked on in the far
-    future.
-    """
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
     template_name = "accounts/create_account.html"
@@ -276,25 +272,13 @@ class AccountCreateView(LoginRequiredMixin, TemplateView):
                 type=account_type
             )
             account.save()
+
             return redirect('accounts:view_account')
-
-
-class AccountModifyView(LoginRequiredMixin, TemplateView):
-    """
-    TODO
-    This is a feature that will be worked on in the far
-    future.
-    """
-    login_url = '/accounts/login/'
-    redirect_field_name = 'redirect_to'
-    pass
 
 
 class AccountDeleteView(LoginRequiredMixin, TemplateView):
     """
-    TODO
-    This is a feature that will be worked on in the far
-    future.
+    This view deletes an account.
     """
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
