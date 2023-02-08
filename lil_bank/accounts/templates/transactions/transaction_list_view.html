@@ -1,6 +1,0 @@
-{% extends 'base.html' %}
-{% block content %}
-{% for transaction in transactions %}
-  <p><a href="{% url 'accounts:transaction_detail' pk=transaction.id %}"> Account {{ transaction.id }}</p>
-{% endfor %}
-{% endblock content %}
