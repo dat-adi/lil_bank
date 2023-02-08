@@ -128,9 +128,9 @@ class BalanceView(LoginRequiredMixin, TemplateView):
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
     template_name = "transactions/balance_view.html"
-    def get(self, request):
-        customer = Customer.objects.get(id=request.user.id)
-        account = Account.objects.get(owner_id=customer.id)
+
+    def get(self, request, **kwargs):
+        account = Account.objects.get(no=kwargs['pk'])
         return render(request, self.template_name, {'account': account})
 
 
@@ -144,17 +144,15 @@ class DepositView(LoginRequiredMixin, TemplateView):
 
     def get(self, request, **kwargs):
         form = DepositForm()
-        customer = Customer.objects.get(id=request.user.id)
-        account = Account.objects.get(owner_id=customer.id)
+        account = Account.objects.get(no=kwargs['pk'])
         return render(request, self.template_name, {'account': account, 'form': form})
 
-    def post(self, request):
+    def post(self, request, **kwargs):
         form = DepositForm(request.POST)
 
         if form.is_valid():
             add_money = form.cleaned_data['add_money']
-            customer = Customer.objects.get(id=request.user.id)
-            account = Account.objects.get(owner_id=customer.id)
+            account = Account.objects.get(no=kwargs['pk'])
             transaction = Transaction(
                 account=account,
                 withdrawal=False,
@@ -164,7 +162,7 @@ class DepositView(LoginRequiredMixin, TemplateView):
             account.save()
             transaction.save()
 
-            return redirect('accounts:balance')
+            return redirect('accounts:balance', pk=kwargs['pk'])
 
 
 class WithdrawView(LoginRequiredMixin, TemplateView):
@@ -178,17 +176,15 @@ class WithdrawView(LoginRequiredMixin, TemplateView):
 
     def get(self, request, **kwargs):
         form = WithdrawForm()
-        customer = Customer.objects.get(id=request.user.id)
-        account = Account.objects.get(owner_id=customer.id)
+        account = Account.objects.get(no=kwargs['pk'])
         return render(request, self.template_name, {'account': account, 'form': form})
 
-    def post(self, request):
+    def post(self, request, **kwargs):
         form = WithdrawForm(request.POST)
 
         if form.is_valid():
             rm_money = form.cleaned_data['rm_money']
-            customer = Customer.objects.get(id=request.user.id)
-            account = Account.objects.get(owner_id=customer.id)
+            account = Account.objects.get(no=kwargs['pk'])
 
             if rm_money > account.balance:
                 return redirect('accounts:invalid_operation')
@@ -202,7 +198,7 @@ class WithdrawView(LoginRequiredMixin, TemplateView):
             account.save()
             transaction.save()
 
-            return redirect('accounts:balance')
+            return redirect('accounts:balance', pk=kwargs['pk'])
 
 
 class AccountListView(LoginRequiredMixin, ListView):
