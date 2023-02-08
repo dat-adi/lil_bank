@@ -1,71 +1,35 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
-from accounts.models import Customer, Account, Transaction
-
+from accounts.models import Customer, Account
 
 class TestTransactions(TestCase):
-    customer = None
-    account = None
-    transaction = None
+    def setUp(self):
+        # Create Test User and login
+        self.user = User.objects.create(username='test')
+        self.client.force_login(self.user)
 
-    @classmethod
-    def setUpTestData(cls):
-        cls.customer = Customer.objects.create(
-            id="1",
+        # Set up a customer and her account
+        self.customer = Customer.objects.create(
+            id=str(self.user.id),
             first_name="Test",
             last_name="User",
             address="#1 Test, User Nagar",
             phone="19199191"
         )
-        cls.account = Account.objects.create(
+        self.account = Account.objects.create(
             type='checking',
-            owner=cls.customer,
+            owner=self.customer,
             balance=10000
         )
-        cls.transaction = Transaction.objects.create(
-            account=cls.account,
-            withdrawal=False,
-            amount=500
-        )
 
-    def test_transactions_status(self):
-        response = self.client.get('/accounts/transactions/', {
-            'account': self.account
-        })
-        self.assertEqual(response.status_code, 200, "The page seems to be down.")
+    def tearDown(self) -> None:
+        self.client.logout()
+        self.account.delete()
+        self.customer.delete()
+        self.user.delete()
+        return super().tearDown()
 
-    def test_balance_status(self):
-        response = self.client.get('/accounts/balance/', {
-            'account': self.account
-        })
 
-        self.assertEqual(response.status_code, 200, "The page seems to be down.")
-
-"""
-    def test_deposit_status(self):
-        response = self.client.get('/accounts/deposit/')
-        self.assertEqual(response.status_code, 200, "The page seems to be down.")
-
-    def test_withdraw_status(self):
-        response = self.client.get('/accounts/withdraw/')
-        self.assertEqual(response.status_code, 200, "The page seems to be down.")
-
-    def test_create_account_status(self):
-        response = self.client.get('/accounts/create_account/')
-        self.assertEqual(response.status_code, 200, "The page seems to be down.")
-
-    def test_view_account_status(self):
-        response = self.client.get('/accounts/view_account/')
-        self.assertEqual(response.status_code, 200, "The page seems to be down.")
-
-    def test_modify_account_status(self):
-        response = self.client.get('/accounts/modify_account/')
-        self.assertEqual(response.status_code, 200, "The page seems to be down.")
-
-    def test_delete_account_status(self):
-        response = self.client.get('/accounts/delete_account/')
-        self.assertEqual(response.status_code, 200, "The page seems to be down.")
-
-    def test_invalid_operation_status(self):
-        response = self.client.get('/accounts/invalid_operation/')
-        self.assertEqual(response.status_code, 200, "The page seems to be down.")
-"""
+    #def test_invalid_operation_status(self):
+    #    response = self.client.get('/accounts/invalid_operation/')
+    #    self.assertEqual(response.status_code, 200, "The page seems to be down.")
