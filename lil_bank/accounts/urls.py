@@ -12,6 +12,7 @@ urlpatterns = [
     # Account Template Pages
     path('', views.AccountListView.as_view(), name="account_list"),
     path('<int:pk>/', views.AccountView.as_view(), name="account_detail"),
+    path('view_account/', views.AccountDetailView.as_view(), name="view_account"),
 
     # Operation Pages
     path('<int:pk>/transactions/', views.TransactionView.as_view(), name="transactions"),
@@ -23,7 +24,7 @@ urlpatterns = [
     path('create_account/', views.AccountCreateView.as_view(), name="create_account"),
     path('modify_account/', views.AccountModifyView.as_view(), name="modify_account"),
     path('delete_account/', views.AccountDeleteView.as_view(), name="delete_account"),
-
     # Miscellaneous Routes
-    path('invalid_operation/', views.InvalidOperation.as_view(), name="invalid_operation")
+    path('invalid_operation/', views.InvalidOperation.as_view(), name="invalid_operation"),
+    path('delete_account/<int:pk>/', views.delete_account, name='delete_account'),
 ]

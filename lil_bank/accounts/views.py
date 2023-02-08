@@ -13,7 +13,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Account, Customer, Transaction
-
+from django.http import JsonResponse
+from django.contrib import messages
 
 class LoginView(TemplateView):
     """
@@ -231,7 +232,7 @@ class AccountDetailView(LoginRequiredMixin, TemplateView):
     """
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
-    template_name = "accounts/account_detail.html"
+    template_name = "accounts/view_account.html"
 
     def get(self, request, **kwargs):
         """
@@ -250,7 +251,6 @@ class AccountDetailView(LoginRequiredMixin, TemplateView):
         list_new = [list_no, list_balance, list_type, list_owner_id]
         list_res = list(map(list, zip(*list_new)))
         return render(request, self.template_name, {'customer': customer, 'user': request.user, 'listRes': list_res})
-
 
 class AccountCreateView(LoginRequiredMixin, TemplateView):
     """
@@ -340,3 +340,11 @@ class AccountView(LoginRequiredMixin, TemplateView):
         return render(request, self.template_name, {
             'account': account
         })
+
+def delete_account(request, pk):
+    account = Account.objects.get(no=pk)
+    if request.method == 'POST':
+        account.delete()
+        messages.success(request, 'Your account has been successfully deleted.')
+        return redirect('accounts:view_account')
+    return render(request, 'accounts/confirm_delete_account.html', {'account': account})

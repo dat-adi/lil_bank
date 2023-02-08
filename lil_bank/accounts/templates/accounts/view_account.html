@@ -1,4 +1,6 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Account Details{% endblock %}
 {% block content %}
 <style>
     table{
@@ -19,7 +21,7 @@
         padding: 15px;
     }
     tr{
-        background-color: rgb(139, 69, 244);
+        background-color: rgb(248, 170, 255);
     }
     h1{
         text-align: center;
@@ -38,27 +40,27 @@
         </tr>
         <tr>
             <td>Username</td>
-            <td style="color: azure;">{{ user.username }}</td>
+            <td style="color: black;">{{ user.username }}</td>
         </tr>
         <tr>
             <td>First Name</td>
-            <td style="color: azure;">{{ customer.first_name }}</td>
+            <td style="color: black;">{{ customer.first_name }}</td>
         </tr>
         <tr>
             <td>Last Name</td>
-            <td style="color: azure;">{{ customer.last_name }}</td>
+            <td style="color: black;">{{ customer.last_name }}</td>
         </tr>
         <tr>
             <td>Email</td>
-            <td style="color: azure;">{{ user.email }}</td>
+            <td style="color: black;">{{ user.email }}</td>
         </tr>
         <tr>
             <td>Phone Number</td>
-            <td style="color: azure;">{{ customer.phone }}</td>
+            <td style="color: black;">{{ customer.phone }}</td>
         </tr>
         <tr>
             <td>Address</td>
-            <td style="color: azure;">{{ customer.address }}</td>
+            <td style="color: black;">{{ customer.address }}</td>
         </tr>
     </table>
     <!-- Display accounts_account table from database. -->
@@ -79,6 +81,7 @@
                     <td style="color: azure;">{{i.1}}</td>
                     <td style="color: azure;">{{i.2}}</td>
                     <td style="color: azure;">{{i.3}}</td>
+                    <td><a href="{% url 'accounts:delete_account' i.0 %}">Close Account</a></td> 
                 </tr>
             {% endfor %}
         
@@ -86,5 +89,4 @@
     <br>
     <a href="{% url 'dashboard:landing_page' %}" style="float:inherit; font-family: Arial; font-size: 0.5cm; background-color: burlywood; border: 2px solid black;">To Homepage </a>
 
-</body>
-{% endblock content %}
+{% endblock %}

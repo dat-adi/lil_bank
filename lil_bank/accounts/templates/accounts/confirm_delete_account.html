@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Are you sure you want to delete account {{ account.no }}?</h2>
+  <form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Confirm">
+    <!-- Now we add a button to cancel the delete which takes the user back to the view_account page -->
+    <a href="{% url 'accounts:view_account' %}" style="background-color: rgb(230, 230, 230); font-size: 0.55cm; padding: 2px; border: 1px solid grey; color: black;">Cancel</a>
+  </form>
+{% endblock %}
