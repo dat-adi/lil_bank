@@ -1,34 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Create Account{% endblock %}
 {% block content %}
-<style>
-    h1{
-        text-align: center;
-        font-size: 1cm;
-        font-family: 'Courier New', Courier, monospace;
-        background-color: rgb(33, 37, 41);
-        align-items: center;
-        color: white;
-        font-weight: bolder;
-    }
-    button{
-        margin-left: auto;
-        margin-right: auto;
-        background-color: rgb(33, 37, 41);
-        color: white;
-        border: 1px solid black;
-        border-radius: 30px;
-        font-size: 0.43cm;
-        font-family: 'Courier New', Courier, monospace;
-    }
-</style>
-    <h1>Create Account</h1>
-    <form method="POST" style="font-size: x-large;">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        <button type="submit">Create Account</button>
-    </form>
+<section class="py-5">
+    <div class="container px-5">
+        <!-- Contact form-->
+        <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+            <div class="text-center mb-5">
+                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
+                <h1 class="fw-bolder">Create an Account</h1>
+                <p class="lead fw-normal text-muted mb-0">The bank lets you make however many you want!</p>
+            </div>
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-8 col-xl-6">
+                    <form id="contactForm" method="POST">
+                       {% csrf_token %}
+                       <div class="form-group mb-3">
+                          <label>Account Type</label>
+                           {{ form.type }}
+                       </div>
+                        <!-- Submit Button-->
+                        <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Create Account</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

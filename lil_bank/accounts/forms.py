@@ -48,11 +48,17 @@ class WithdrawForm(forms.Form):
     """
     rm_money = forms.IntegerField()
 
+
 class CreateAccountForm(forms.Form):
     """
     This is the form used to create an account.
     """
     type = forms.ChoiceField(choices=[('Checking', 'Checking'), ('Savings', 'Savings')], initial='Checking')
+
+    def __init__(self, *args, **kwargs):
+        super(CreateAccountForm, self).__init__(*args, **kwargs)
+        self.fields['type'].widget.attrs.update({'class': 'form-control'})
+
 
 class DeleteAccountForm(forms.Form):
     """
