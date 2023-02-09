@@ -17,4 +17,4 @@ const images = [image1, image2, image3, image4];
   setInterval(() => {
     currentImageIndex = (currentImageIndex + 1) % images.length;
     sliderImage.src = images[currentImageIndex];
-  }, 3000);
+  }, 1000);
