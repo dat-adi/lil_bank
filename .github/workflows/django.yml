@@ -37,5 +37,7 @@ jobs:
       run: |
         make env
     - name: Run Tests
+      env:
+        DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
       run: |
         make test
