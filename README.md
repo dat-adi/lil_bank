@@ -37,15 +37,15 @@ Bank needs to display a summarized report about customers.
 ## Features
 - [X] Web Portal should have multiple menu items to perform tasks after login
 - [X] Some menu option should have sub menu 
-- [ ] Web portal should be with JavaScript based slider 
+- [X] Web portal should be with JavaScript based slider 
 - [X] Web portal should have registration and login form
-- [ ] Web portal should have search module 
+- [X] Web portal should have search module 
 - [X] Only authorized user should access the portal’s features.
 - [X] Validate the Web form to get the required data 
 - [X] Write methods for declaring fields to be used for storing structured data 
 - [X] Validate the structure of data.  
-- [ ] Display summarized data. 
-- [ ] Can have caching management for improved performance 
+- [X] Display summarized data. 
+- [X] Can have caching management for improved performance 
 - [X] State Management using sessions
 - [X] User profiles 
 - [X] Web portal should be compatible with all browsers 
@@ -53,7 +53,7 @@ Bank needs to display a summarized report about customers.
 ## Other Challenges/Features
 
 - [X] Use bootstrap for design pages
-- [ ] Provide authentication, authorization using oauth or similar package
+- [X] Provide authentication, authorization using oauth or similar package
 - [X] Create restful apis for app features
 - [X] Provide swagger UI for rest api usage
 - [ ] If possible or it’s optional, create micro-services for the app components using docker
