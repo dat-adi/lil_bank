@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.test import TestCase
 from django.utils.http import urlencode
-from accounts.models import Customer, Account
+from accounts.models import Customer, Account, Transaction
 from accounts.forms import CreateAccountForm, DepositForm, WithdrawForm
 
 class TestOperations(TestCase):
@@ -58,6 +58,12 @@ class TestOperations(TestCase):
             Account.objects.all().count(), accounts + 1, 'No new account added'
         )
 
+        # Make sure there are no transactions for the new account
+        self.assertFalse(
+            Transaction.objects.filter(account=self.account),
+            'There are existing transactions for a new account'
+        )
+
         # Since we have only two accounts, it shouldn't be hard to
         # figure out the account added!  Just exclude self.account
         new_account = Account.objects.get(~Q(no=self.account.no))
@@ -70,6 +76,14 @@ class TestOperations(TestCase):
             new_account.balance, 0.,
             "New account's balance is not 0"
         )
+
+        # Make sure there are no transactions for the new account
+        self.assertFalse(
+            Transaction.objects.filter(account=new_account),
+            'There are existing transactions for a new account'
+        )
+
+        # Cleanup
         new_account.delete()
 
     def test_delete_account(self) -> None:
@@ -104,8 +118,11 @@ class TestOperations(TestCase):
         )
 
     def test_deposit(self) -> None:
-        # Note current account balance
+        # Note current account balance and # of transactions
         previous_balance = self.account.balance
+        transactions = Transaction.objects.filter(
+            account=self.account, withdrawal=False
+        ).count()
 
         # Validate form
         data = { 'add_money': 500. }
@@ -127,16 +144,28 @@ class TestOperations(TestCase):
         # reference elsewhere
         self.account.refresh_from_db()
 
-        # Check if money was added to previous balance
+        # Check if money was added to previous balance and a transaction
+        # record was added
         self.assertEqual(
             self.account.balance, previous_balance + data['add_money'],
             'Account Balance is not as expected after a deposit'
         )
+        self.assertEqual(
+            Transaction.objects.filter(
+                account=self.account,
+                withdrawal=False
+            ).count(), transactions + 1,
+            'A transaction record was not added for the deposit'
+        )
 
     def test_withdraw(self) -> None:
-        # Note current account balance
+        # Note current account balance and # of transactions
         previous_balance = self.account.balance
         self.assertNotEqual(previous_balance, 0., 'Account Balance is zero')
+        transactions = Transaction.objects.filter(
+            account=self.account,
+            withdrawal=True
+        ).count()
 
         # Validate form
         data = { 'rm_money': previous_balance }
@@ -158,8 +187,16 @@ class TestOperations(TestCase):
         # reference elsewhere
         self.account.refresh_from_db()
 
-        # Check if balance is zero now
+        # Check if balance is zero now and a transaction record was
+        # added
         self.assertEqual(
             self.account.balance, 0.,
             'Account Balance is greater than zero after a full withdraw'
+        )
+        self.assertEqual(
+            Transaction.objects.filter(
+                account=self.account,
+                withdrawal=True
+            ).count(), transactions + 1,
+            'A transaction record was not added for the deposit'
         )
