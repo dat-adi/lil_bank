@@ -19,8 +19,8 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
           
         ports:
           - 5432:5432
@@ -39,5 +39,8 @@ jobs:
     - name: Run Tests
       env:
         DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        
       run: |
         make test
