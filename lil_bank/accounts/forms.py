@@ -43,7 +43,7 @@ class SignUpForm(forms.Form):
     
     def clean_phone(self):
         phone = self.cleaned_data['phone']
-        if not re.match(r'^[0-9]+$', phone):
+        if not re.match(r'^\d{10}$', phone):
             raise forms.ValidationError("Phone number must contain only numbers.")
         return phone
     

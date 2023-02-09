@@ -36,4 +36,3 @@ types-urllib3>=1.26.25.5
 typing_extensions>=4.4.0
 uritemplate>=4.1.1
 urllib3>=1.26.14
-regex>=2022.10.31
