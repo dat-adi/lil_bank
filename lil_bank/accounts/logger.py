@@ -6,6 +6,10 @@ import sys
 
 from django.conf import settings
 
+# We check if the logs directory exists. If not, we create it.
+if not os.path.exists(os.path.join(settings.BASE_DIR, 'logs', 'debug.log')):
+    os.mkdir(os.path.join(settings.BASE_DIR, 'logs', 'debug.log'))
+
 log_file = os.path.join(settings.BASE_DIR, 'logs', 'debug.log')
 # debug_level = logging.INFO
 # logging.basicConfig(filename=log_file, level=debug_level, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
