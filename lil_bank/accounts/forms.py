@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from .models import Customer , Account
+from django.core.validators import RegexValidator
+import re
 
 # class AccountForm(ModelForm):
 #     """
@@ -19,12 +21,38 @@ class SignUpForm(forms.Form):
     """
     first_name = forms.CharField(max_length=32)
     last_name = forms.CharField(max_length=32)
+    last_name = forms.CharField(max_length=32)
     username = forms.CharField(max_length=50)
     email = forms.EmailField(max_length=254)
     address = forms.CharField(max_length=256)
     phone = forms.CharField(max_length=16)
     password1 = forms.CharField(label="Password", strip=False, widget=forms.PasswordInput,min_length=8)
     password2 = forms.CharField(label="Re-enter Password", strip=False, widget=forms.PasswordInput,min_length=8)
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data['first_name']
+        if not re.match(r'^[a-zA-Z]+$', first_name):
+            raise forms.ValidationError("First name must contain only letters.")
+        return first_name
+    
+    def clean_last_name(self):
+        last_name = self.cleaned_data['last_name']
+        if not re.match(r'^[a-zA-Z]+$', last_name):
+            raise forms.ValidationError("Last name must contain only letters.")
+        return last_name
+    
+    def clean_phone(self):
+        phone = self.cleaned_data['phone']
+        if not re.match(r'^[0-9]+$', phone):
+            raise forms.ValidationError("Phone number must contain only numbers.")
+        return phone
+    
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Passwords don't match")
+        return password2
 
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
