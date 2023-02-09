@@ -13,6 +13,9 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Account, Customer, Transaction
 from django.contrib import messages
+from .logger import logger
+
+# Now we implement logger in every view.
 
 
 class LoginView(TemplateView):
@@ -45,6 +48,8 @@ class LoginView(TemplateView):
         login(request, user)
 
         # Now redirect to the home page.
+        # The logger is used here.
+        logger.info('User %s logged in successfully.' % user.username)
         return redirect('dashboard:landing_page')
 
 
@@ -89,8 +94,14 @@ class SignUpView(TemplateView):
             account.save()
 
             # Redirect to the login page.
+            # The logger is used here.
+            logger.info('User %s signed up successfully.' % user.username)
             return redirect('/accounts/login/')
-        return render(request, self.template_name, {'form': form})
+        else:
+            # The logger is used here.
+            logger.info('User sign up failed.')
+            return render(request, self.template_name, {'form': form})
+        # return render(request, self.template_name, {'form': form})
 
 
 class LogoutView(TemplateView):
@@ -104,6 +115,8 @@ class LogoutView(TemplateView):
         # Log out the user.
         logout(request)
         # Redirect to the login page.
+        # The logger is used here.
+        logger.info('User logged out successfully.')
         return render(request, 'accounts/login.html', {'form': LoginForm()})
 
 
@@ -121,6 +134,9 @@ class TransactionView(LoginRequiredMixin, TemplateView):
             transactions = Transaction.objects.filter(account=account)
         except ObjectDoesNotExist as err:
             return redirect('accounts:invalid_operation')
+        
+        # The logger is used here.
+        logger.info('User %s viewed transactions successfully.' % request.user.username)
 
         return render(request, self.template_name, {
             'transactions': transactions,
@@ -138,6 +154,8 @@ class BalanceView(LoginRequiredMixin, TemplateView):
 
     def get(self, request, **kwargs):
         account = Account.objects.get(no=kwargs['pk'])
+        # The logger is used here.
+        logger.info('User %s viewed balance successfully.' % request.user.username)
         return render(request, self.template_name, {'account': account})
 
 
@@ -168,7 +186,8 @@ class DepositView(LoginRequiredMixin, TemplateView):
             account.balance += add_money
             account.save()
             transaction.save()
-
+            # The logger is used here.
+            logger.info('User %s deposited money successfully.' % request.user.username)
             return redirect('accounts:balance', pk=kwargs['pk'])
 
 
@@ -204,7 +223,8 @@ class WithdrawView(LoginRequiredMixin, TemplateView):
             account.balance -= rm_money
             account.save()
             transaction.save()
-
+            # The logger is used here.
+            logger.info('User %s withdrew money successfully.' % request.user.username)
             return redirect('accounts:balance', pk=kwargs['pk'])
 
 
@@ -227,7 +247,8 @@ class AccountListView(LoginRequiredMixin, ListView):
     def get_queryset(self, **kwargs):
         customer = Customer.objects.get(id=self.request.user.id)
         queryset = Account.objects.filter(owner=customer).order_by('no')
-
+        # The logger is used here.
+        logger.info('User %s viewed account list successfully.' % self.request.user.username)
         return queryset
 
 
@@ -255,6 +276,8 @@ class AccountDetailView(LoginRequiredMixin, TemplateView):
             list_no.append(i.no)
         list_new = [list_no, list_balance, list_type, list_owner_id]
         list_res = list(map(list, zip(*list_new)))
+        # The logger is used here.
+        logger.info('User %s viewed account details successfully.' % request.user.username)
         return render(request, self.template_name, {
             'customer': customer,
             'user': request.user,
@@ -281,6 +304,8 @@ class AccountCreateView(LoginRequiredMixin, TemplateView):
                 type=account_type
             )
             account.save()
+            # The logger is used here.
+            logger.info('User %s created account successfully.' % request.user.username)
 
             return redirect('accounts:view_account')
 
@@ -308,6 +333,8 @@ class AccountView(LoginRequiredMixin, TemplateView):
             owner=self.request.user.id,
             no=kwargs['pk']
         )
+        # The logger is used here.
+        logger.info('User %s viewed account successfully.' % request.user.username)
         return render(request, self.template_name, {
             'account': account
         })
@@ -319,4 +346,6 @@ def delete_account(request, pk):
         account.delete()
         messages.success(request, 'Your account has been successfully deleted.')
         return redirect('accounts:view_account')
+    # The logger is used here.
+    logger.info('User %s deleted account successfully.' % request.user.username)
     return render(request, 'accounts/confirm_delete_account.html', {'account': account})
