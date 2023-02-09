@@ -18,7 +18,10 @@ from dotenv import dotenv_values
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Setting up environment variables
-config = dotenv_values('.env')
+config = {
+    **dotenv_values(".env"),
+    **os.environ
+}
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config['DJANGO_SECRET_KEY']
