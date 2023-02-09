@@ -104,7 +104,7 @@ class DepositForm(forms.Form):
     """
     This is the form used to deposit cash into an account.
     """
-    add_money = forms.IntegerField(max_value=100000)
+    add_money = forms.IntegerField(min_value=0,max_value=100000)
 
     def __init__(self, *args, **kwargs):
         super(DepositForm, self).__init__(*args, **kwargs)
