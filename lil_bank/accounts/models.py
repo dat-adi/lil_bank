@@ -23,7 +23,7 @@ class Customer(models.Model):
 
 class Account(models.Model):
     no: models.AutoField = models.AutoField(primary_key=True)
-    type: models.CharField = models.CharField(max_length=32, default="checking")
+    type: models.CharField = models.CharField(max_length=32, default="Checking")
     owner: models.ForeignKey = models.ForeignKey(
         Customer,
         on_delete=models.CASCADE,
