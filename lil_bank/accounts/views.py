@@ -89,7 +89,7 @@ class SignUpView(TemplateView):
             account.save()
 
             # Redirect to the login page.
-            return render(request, 'accounts/login.html', {'form': LoginForm()})
+            return redirect('/accounts/login/')
         return render(request, self.template_name, {'form': form})
 
 
