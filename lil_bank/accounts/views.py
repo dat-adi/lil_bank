@@ -83,15 +83,9 @@ class SignUpView(TemplateView):
                 phone=form.cleaned_data['phone'],
             )
 
-            # Create a new account.
-            account = Account.objects.create(
-                no=customer.id,
-                owner=customer,
-            )
             # Write to the database.
             user.save()
             customer.save()
-            account.save()
 
             # Redirect to the login page.
             # The logger is used here.
