@@ -23,8 +23,8 @@ class SignUpForm(forms.Form):
     email = forms.EmailField(max_length=254)
     address = forms.CharField(max_length=256)
     phone = forms.CharField(max_length=16)
-    password1 = forms.CharField(label="Password", strip=False, widget=forms.PasswordInput)
-    password2 = forms.CharField(label="Re-enter Password", strip=False, widget=forms.PasswordInput)
+    password1 = forms.CharField(label="Password", strip=False, widget=forms.PasswordInput,min_length=8)
+    password2 = forms.CharField(label="Re-enter Password", strip=False, widget=forms.PasswordInput,min_length=8)
 
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
