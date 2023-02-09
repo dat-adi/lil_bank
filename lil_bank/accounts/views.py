@@ -16,6 +16,7 @@ from .models import Account, Customer, Transaction
 from django.http import JsonResponse
 from django.contrib import messages
 
+
 class LoginView(TemplateView):
     """
     This is the view for logging in.
@@ -227,7 +228,6 @@ class AccountListView(LoginRequiredMixin, ListView):
 
 class AccountDetailView(LoginRequiredMixin, TemplateView):
     """
-    TODO: Delete this class.
     This is the view for displaying the account details.
     """
     login_url = '/accounts/login/'
@@ -324,6 +324,7 @@ class AccountView(LoginRequiredMixin, TemplateView):
         return render(request, self.template_name, {
             'account': account
         })
+
 
 def delete_account(request, pk):
     account = Account.objects.get(no=pk)

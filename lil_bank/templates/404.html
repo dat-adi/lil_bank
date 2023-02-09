@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="py-5" id="features">
+  <div class="container px-5 my-5">
+    <div class="row gx-5">
+      <div class="col-lg-4 mb-5 mb-lg-0">
+        <h2 class="fw-bolder mb-0">This page does not exist.</h2>
+        <p class="lead fw-bolder mb-0">Try <a href="{% url 'dashboard:landing_page' %}">again?</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
