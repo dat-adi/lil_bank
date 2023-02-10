@@ -21,7 +21,6 @@ class SignUpForm(forms.Form):
     """
     first_name = forms.CharField(max_length=32)
     last_name = forms.CharField(max_length=32)
-    last_name = forms.CharField(max_length=32)
     username = forms.CharField(max_length=50)
     email = forms.EmailField(max_length=254)
     address = forms.CharField(max_length=256)
