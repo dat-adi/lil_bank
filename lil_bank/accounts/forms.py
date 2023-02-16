@@ -42,8 +42,9 @@ class SignUpForm(forms.Form):
     
     def clean_phone(self):
         phone = self.cleaned_data['phone']
-        if not re.match(r'^[0-9]+$', phone) and len(phone) != 10:
-            raise forms.ValidationError("Phone number must contain only numbers and be 10 digits long.")
+        # Validation for 10 digit phone number
+        if not re.match(r'^\d{10}$', phone):
+            raise forms.ValidationError("Phone number must contain only numbers be 10 digits.")
         return phone
     
     def clean_password2(self):
