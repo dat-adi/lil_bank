@@ -13,7 +13,7 @@ class TestAuthentication(TestCase):
             'username': 'test_user_1',
             'email': 'test@user.com',
             'address': '#1 Test, User Nagar',
-            'phone': '19199191',
+            'phone': '1234567890',
             'password1': 'test_user_password',
             'password2': 'test_user_password',
         }
