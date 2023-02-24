@@ -147,7 +147,7 @@ class WithdrawForm(forms.Form):
     """
     This is the form used to deposit cash into an account.
     """
-    rm_money = forms.IntegerField()
+    rm_money = forms.IntegerField(min_value=0)
 
     def __init__(self, *args, **kwargs):
         super(WithdrawForm, self).__init__(*args, **kwargs)
